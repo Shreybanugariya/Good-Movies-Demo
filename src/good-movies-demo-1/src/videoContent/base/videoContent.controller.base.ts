@@ -16,11 +16,7 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
-import * as nestAccessControl from "nest-access-control";
-import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { VideoContentService } from "../videoContent.service";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { VideoContentCreateInput } from "./VideoContentCreateInput";
 import { VideoContent } from "./VideoContent";
 import { VideoContentFindManyArgs } from "./VideoContentFindManyArgs";
@@ -30,23 +26,12 @@ import { GenreFindManyArgs } from "../../genre/base/GenreFindManyArgs";
 import { Genre } from "../../genre/base/Genre";
 import { GenreWhereUniqueInput } from "../../genre/base/GenreWhereUniqueInput";
 
-@swagger.ApiBearerAuth()
-@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class VideoContentControllerBase {
-  constructor(
-    protected readonly service: VideoContentService,
-    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
-  ) {}
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  constructor(protected readonly service: VideoContentService) {}
   @common.Post()
   @swagger.ApiCreatedResponse({ type: VideoContent })
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "create",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
+  @swagger.ApiBody({
+    type: VideoContentCreateInput,
   })
   async createVideoContent(
     @common.Body() data: VideoContentCreateInput
@@ -91,18 +76,9 @@ export class VideoContentControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [VideoContent] })
   @ApiNestedQuery(VideoContentFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "read",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async videoContents(@common.Req() request: Request): Promise<VideoContent[]> {
     const args = plainToClass(VideoContentFindManyArgs, request.query);
     return this.service.videoContents({
@@ -131,18 +107,9 @@ export class VideoContentControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: VideoContent })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "read",
-    possession: "own",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async videoContent(
     @common.Param() params: VideoContentWhereUniqueInput
   ): Promise<VideoContent | null> {
@@ -178,17 +145,11 @@ export class VideoContentControllerBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: VideoContent })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "update",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
+  @swagger.ApiBody({
+    type: VideoContentUpdateInput,
   })
   async updateVideoContent(
     @common.Param() params: VideoContentWhereUniqueInput,
@@ -247,14 +208,6 @@ export class VideoContentControllerBase {
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: VideoContent })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "delete",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async deleteVideoContent(
     @common.Param() params: VideoContentWhereUniqueInput
   ): Promise<VideoContent | null> {
@@ -293,14 +246,8 @@ export class VideoContentControllerBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id/itemPrice")
   @ApiNestedQuery(GenreFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "read",
-    possession: "any",
-  })
   async findItemPrice(
     @common.Req() request: Request,
     @common.Param() params: VideoContentWhereUniqueInput
@@ -345,11 +292,6 @@ export class VideoContentControllerBase {
   }
 
   @common.Post("/:id/itemPrice")
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "update",
-    possession: "any",
-  })
   async connectItemPrice(
     @common.Param() params: VideoContentWhereUniqueInput,
     @common.Body() body: GenreWhereUniqueInput[]
@@ -367,11 +309,6 @@ export class VideoContentControllerBase {
   }
 
   @common.Patch("/:id/itemPrice")
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "update",
-    possession: "any",
-  })
   async updateItemPrice(
     @common.Param() params: VideoContentWhereUniqueInput,
     @common.Body() body: GenreWhereUniqueInput[]
@@ -389,11 +326,6 @@ export class VideoContentControllerBase {
   }
 
   @common.Delete("/:id/itemPrice")
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "update",
-    possession: "any",
-  })
   async disconnectItemPrice(
     @common.Param() params: VideoContentWhereUniqueInput,
     @common.Body() body: GenreWhereUniqueInput[]

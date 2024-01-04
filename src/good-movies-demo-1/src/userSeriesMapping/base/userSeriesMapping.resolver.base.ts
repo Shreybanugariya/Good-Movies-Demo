@@ -13,12 +13,6 @@ import * as graphql from "@nestjs/graphql";
 import { GraphQLError } from "graphql";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
-import * as nestAccessControl from "nest-access-control";
-import * as gqlACGuard from "../../auth/gqlAC.guard";
-import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
-import * as common from "@nestjs/common";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { UserSeriesMapping } from "./UserSeriesMapping";
 import { UserSeriesMappingCountArgs } from "./UserSeriesMappingCountArgs";
 import { UserSeriesMappingFindManyArgs } from "./UserSeriesMappingFindManyArgs";
@@ -31,20 +25,10 @@ import { User } from "../../user/base/User";
 import { SeriesFindManyArgs } from "../../series/base/SeriesFindManyArgs";
 import { Series } from "../../series/base/Series";
 import { UserSeriesMappingService } from "../userSeriesMapping.service";
-@common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => UserSeriesMapping)
 export class UserSeriesMappingResolverBase {
-  constructor(
-    protected readonly service: UserSeriesMappingService,
-    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
-  ) {}
+  constructor(protected readonly service: UserSeriesMappingService) {}
 
-  @graphql.Query(() => MetaQueryPayload)
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "read",
-    possession: "any",
-  })
   async _userSeriesMappingsMeta(
     @graphql.Args() args: UserSeriesMappingCountArgs
   ): Promise<MetaQueryPayload> {
@@ -54,26 +38,14 @@ export class UserSeriesMappingResolverBase {
     };
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [UserSeriesMapping])
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "read",
-    possession: "any",
-  })
   async userSeriesMappings(
     @graphql.Args() args: UserSeriesMappingFindManyArgs
   ): Promise<UserSeriesMapping[]> {
     return this.service.userSeriesMappings(args);
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => UserSeriesMapping, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "read",
-    possession: "own",
-  })
   async userSeriesMapping(
     @graphql.Args() args: UserSeriesMappingFindUniqueArgs
   ): Promise<UserSeriesMapping | null> {
@@ -84,13 +56,7 @@ export class UserSeriesMappingResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => UserSeriesMapping)
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "create",
-    possession: "any",
-  })
   async createUserSeriesMapping(
     @graphql.Args() args: CreateUserSeriesMappingArgs
   ): Promise<UserSeriesMapping> {
@@ -100,13 +66,7 @@ export class UserSeriesMappingResolverBase {
     });
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => UserSeriesMapping)
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "update",
-    possession: "any",
-  })
   async updateUserSeriesMapping(
     @graphql.Args() args: UpdateUserSeriesMappingArgs
   ): Promise<UserSeriesMapping | null> {
@@ -126,11 +86,6 @@ export class UserSeriesMappingResolverBase {
   }
 
   @graphql.Mutation(() => UserSeriesMapping)
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "delete",
-    possession: "any",
-  })
   async deleteUserSeriesMapping(
     @graphql.Args() args: DeleteUserSeriesMappingArgs
   ): Promise<UserSeriesMapping | null> {
@@ -146,13 +101,7 @@ export class UserSeriesMappingResolverBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [User], { name: "userId" })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
   async findUserId(
     @graphql.Parent() parent: UserSeriesMapping,
     @graphql.Args() args: UserFindManyArgs
@@ -166,13 +115,7 @@ export class UserSeriesMappingResolverBase {
     return results;
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [Series], { name: "webSeriesId" })
-  @nestAccessControl.UseRoles({
-    resource: "Series",
-    action: "read",
-    possession: "any",
-  })
   async findWebSeriesId(
     @graphql.Parent() parent: UserSeriesMapping,
     @graphql.Args() args: SeriesFindManyArgs

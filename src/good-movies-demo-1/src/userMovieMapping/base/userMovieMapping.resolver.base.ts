@@ -13,12 +13,6 @@ import * as graphql from "@nestjs/graphql";
 import { GraphQLError } from "graphql";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
-import * as nestAccessControl from "nest-access-control";
-import * as gqlACGuard from "../../auth/gqlAC.guard";
-import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
-import * as common from "@nestjs/common";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { UserMovieMapping } from "./UserMovieMapping";
 import { UserMovieMappingCountArgs } from "./UserMovieMappingCountArgs";
 import { UserMovieMappingFindManyArgs } from "./UserMovieMappingFindManyArgs";
@@ -29,20 +23,10 @@ import { DeleteUserMovieMappingArgs } from "./DeleteUserMovieMappingArgs";
 import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
 import { UserMovieMappingService } from "../userMovieMapping.service";
-@common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => UserMovieMapping)
 export class UserMovieMappingResolverBase {
-  constructor(
-    protected readonly service: UserMovieMappingService,
-    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
-  ) {}
+  constructor(protected readonly service: UserMovieMappingService) {}
 
-  @graphql.Query(() => MetaQueryPayload)
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "read",
-    possession: "any",
-  })
   async _userMovieMappingsMeta(
     @graphql.Args() args: UserMovieMappingCountArgs
   ): Promise<MetaQueryPayload> {
@@ -52,26 +36,14 @@ export class UserMovieMappingResolverBase {
     };
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [UserMovieMapping])
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "read",
-    possession: "any",
-  })
   async userMovieMappings(
     @graphql.Args() args: UserMovieMappingFindManyArgs
   ): Promise<UserMovieMapping[]> {
     return this.service.userMovieMappings(args);
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => UserMovieMapping, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "read",
-    possession: "own",
-  })
   async userMovieMapping(
     @graphql.Args() args: UserMovieMappingFindUniqueArgs
   ): Promise<UserMovieMapping | null> {
@@ -82,13 +54,7 @@ export class UserMovieMappingResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => UserMovieMapping)
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "create",
-    possession: "any",
-  })
   async createUserMovieMapping(
     @graphql.Args() args: CreateUserMovieMappingArgs
   ): Promise<UserMovieMapping> {
@@ -98,13 +64,7 @@ export class UserMovieMappingResolverBase {
     });
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => UserMovieMapping)
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "update",
-    possession: "any",
-  })
   async updateUserMovieMapping(
     @graphql.Args() args: UpdateUserMovieMappingArgs
   ): Promise<UserMovieMapping | null> {
@@ -124,11 +84,6 @@ export class UserMovieMappingResolverBase {
   }
 
   @graphql.Mutation(() => UserMovieMapping)
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "delete",
-    possession: "any",
-  })
   async deleteUserMovieMapping(
     @graphql.Args() args: DeleteUserMovieMappingArgs
   ): Promise<UserMovieMapping | null> {
@@ -144,13 +99,7 @@ export class UserMovieMappingResolverBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [User], { name: "movieId" })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
   async findMovieId(
     @graphql.Parent() parent: UserMovieMapping,
     @graphql.Args() args: UserFindManyArgs
@@ -164,13 +113,7 @@ export class UserMovieMappingResolverBase {
     return results;
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [User], { name: "userId" })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
   async findUserId(
     @graphql.Parent() parent: UserMovieMapping,
     @graphql.Args() args: UserFindManyArgs

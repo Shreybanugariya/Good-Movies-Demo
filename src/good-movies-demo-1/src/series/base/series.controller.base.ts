@@ -16,11 +16,7 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
-import * as nestAccessControl from "nest-access-control";
-import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { SeriesService } from "../series.service";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { SeriesCreateInput } from "./SeriesCreateInput";
 import { Series } from "./Series";
 import { SeriesFindManyArgs } from "./SeriesFindManyArgs";
@@ -30,23 +26,12 @@ import { GenreFindManyArgs } from "../../genre/base/GenreFindManyArgs";
 import { Genre } from "../../genre/base/Genre";
 import { GenreWhereUniqueInput } from "../../genre/base/GenreWhereUniqueInput";
 
-@swagger.ApiBearerAuth()
-@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class SeriesControllerBase {
-  constructor(
-    protected readonly service: SeriesService,
-    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
-  ) {}
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  constructor(protected readonly service: SeriesService) {}
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Series })
-  @nestAccessControl.UseRoles({
-    resource: "Series",
-    action: "create",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
+  @swagger.ApiBody({
+    type: SeriesCreateInput,
   })
   async createSeries(@common.Body() data: SeriesCreateInput): Promise<Series> {
     return await this.service.createSeries({
@@ -88,18 +73,9 @@ export class SeriesControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Series] })
   @ApiNestedQuery(SeriesFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Series",
-    action: "read",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async seriesItems(@common.Req() request: Request): Promise<Series[]> {
     const args = plainToClass(SeriesFindManyArgs, request.query);
     return this.service.seriesItems({
@@ -129,18 +105,9 @@ export class SeriesControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Series })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Series",
-    action: "read",
-    possession: "own",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async series(
     @common.Param() params: SeriesWhereUniqueInput
   ): Promise<Series | null> {
@@ -177,17 +144,11 @@ export class SeriesControllerBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Series })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Series",
-    action: "update",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
+  @swagger.ApiBody({
+    type: SeriesUpdateInput,
   })
   async updateSeries(
     @common.Param() params: SeriesWhereUniqueInput,
@@ -245,14 +206,6 @@ export class SeriesControllerBase {
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Series })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Series",
-    action: "delete",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async deleteSeries(
     @common.Param() params: SeriesWhereUniqueInput
   ): Promise<Series | null> {
@@ -292,14 +245,8 @@ export class SeriesControllerBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id/genre")
   @ApiNestedQuery(GenreFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "read",
-    possession: "any",
-  })
   async findGenre(
     @common.Req() request: Request,
     @common.Param() params: SeriesWhereUniqueInput
@@ -344,11 +291,6 @@ export class SeriesControllerBase {
   }
 
   @common.Post("/:id/genre")
-  @nestAccessControl.UseRoles({
-    resource: "Series",
-    action: "update",
-    possession: "any",
-  })
   async connectGenre(
     @common.Param() params: SeriesWhereUniqueInput,
     @common.Body() body: GenreWhereUniqueInput[]
@@ -366,11 +308,6 @@ export class SeriesControllerBase {
   }
 
   @common.Patch("/:id/genre")
-  @nestAccessControl.UseRoles({
-    resource: "Series",
-    action: "update",
-    possession: "any",
-  })
   async updateGenre(
     @common.Param() params: SeriesWhereUniqueInput,
     @common.Body() body: GenreWhereUniqueInput[]
@@ -388,11 +325,6 @@ export class SeriesControllerBase {
   }
 
   @common.Delete("/:id/genre")
-  @nestAccessControl.UseRoles({
-    resource: "Series",
-    action: "update",
-    possession: "any",
-  })
   async disconnectGenre(
     @common.Param() params: SeriesWhereUniqueInput,
     @common.Body() body: GenreWhereUniqueInput[]

@@ -1,12 +1,11 @@
-import { Module, forwardRef } from "@nestjs/common";
-import { AuthModule } from "../auth/auth.module";
+import { Module } from "@nestjs/common";
 import { SeriesModuleBase } from "./base/series.module.base";
 import { SeriesService } from "./series.service";
 import { SeriesController } from "./series.controller";
 import { SeriesResolver } from "./series.resolver";
 
 @Module({
-  imports: [SeriesModuleBase, forwardRef(() => AuthModule)],
+  imports: [SeriesModuleBase],
   controllers: [SeriesController],
   providers: [SeriesService, SeriesResolver],
   exports: [SeriesService],

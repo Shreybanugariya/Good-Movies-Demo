@@ -16,11 +16,7 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
-import * as nestAccessControl from "nest-access-control";
-import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { MovieService } from "../movie.service";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { MovieCreateInput } from "./MovieCreateInput";
 import { Movie } from "./Movie";
 import { MovieFindManyArgs } from "./MovieFindManyArgs";
@@ -30,23 +26,12 @@ import { GenreFindManyArgs } from "../../genre/base/GenreFindManyArgs";
 import { Genre } from "../../genre/base/Genre";
 import { GenreWhereUniqueInput } from "../../genre/base/GenreWhereUniqueInput";
 
-@swagger.ApiBearerAuth()
-@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class MovieControllerBase {
-  constructor(
-    protected readonly service: MovieService,
-    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
-  ) {}
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  constructor(protected readonly service: MovieService) {}
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Movie })
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "create",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
+  @swagger.ApiBody({
+    type: MovieCreateInput,
   })
   async createMovie(@common.Body() data: MovieCreateInput): Promise<Movie> {
     return await this.service.createMovie({
@@ -75,18 +60,9 @@ export class MovieControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Movie] })
   @ApiNestedQuery(MovieFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "read",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async movies(@common.Req() request: Request): Promise<Movie[]> {
     const args = plainToClass(MovieFindManyArgs, request.query);
     return this.service.movies({
@@ -109,18 +85,9 @@ export class MovieControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Movie })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "read",
-    possession: "own",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async movie(
     @common.Param() params: MovieWhereUniqueInput
   ): Promise<Movie | null> {
@@ -150,17 +117,11 @@ export class MovieControllerBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Movie })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "update",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
+  @swagger.ApiBody({
+    type: MovieUpdateInput,
   })
   async updateMovie(
     @common.Param() params: MovieWhereUniqueInput,
@@ -205,14 +166,6 @@ export class MovieControllerBase {
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Movie })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "delete",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async deleteMovie(
     @common.Param() params: MovieWhereUniqueInput
   ): Promise<Movie | null> {
@@ -245,14 +198,8 @@ export class MovieControllerBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id/genre")
   @ApiNestedQuery(GenreFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "read",
-    possession: "any",
-  })
   async findGenre(
     @common.Req() request: Request,
     @common.Param() params: MovieWhereUniqueInput
@@ -297,11 +244,6 @@ export class MovieControllerBase {
   }
 
   @common.Post("/:id/genre")
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "update",
-    possession: "any",
-  })
   async connectGenre(
     @common.Param() params: MovieWhereUniqueInput,
     @common.Body() body: GenreWhereUniqueInput[]
@@ -319,11 +261,6 @@ export class MovieControllerBase {
   }
 
   @common.Patch("/:id/genre")
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "update",
-    possession: "any",
-  })
   async updateGenre(
     @common.Param() params: MovieWhereUniqueInput,
     @common.Body() body: GenreWhereUniqueInput[]
@@ -341,11 +278,6 @@ export class MovieControllerBase {
   }
 
   @common.Delete("/:id/genre")
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "update",
-    possession: "any",
-  })
   async disconnectGenre(
     @common.Param() params: MovieWhereUniqueInput,
     @common.Body() body: GenreWhereUniqueInput[]

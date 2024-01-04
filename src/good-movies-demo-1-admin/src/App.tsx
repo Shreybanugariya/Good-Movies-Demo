@@ -37,7 +37,7 @@ import { UserVideoContentMappingList } from "./userVideoContentMapping/UserVideo
 import { UserVideoContentMappingCreate } from "./userVideoContentMapping/UserVideoContentMappingCreate";
 import { UserVideoContentMappingEdit } from "./userVideoContentMapping/UserVideoContentMappingEdit";
 import { UserVideoContentMappingShow } from "./userVideoContentMapping/UserVideoContentMappingShow";
-import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
+import { httpAuthProvider } from "./auth-provider/ra-auth-http";
 
 const App = (): React.ReactElement => {
   const [dataProvider, setDataProvider] = useState<DataProvider | null>(null);
@@ -58,7 +58,7 @@ const App = (): React.ReactElement => {
       <Admin
         title={"Good Movies Demo 1"}
         dataProvider={dataProvider}
-        authProvider={jwtAuthProvider}
+        authProvider={httpAuthProvider}
         theme={theme}
         dashboard={Dashboard}
         loginPage={Login}

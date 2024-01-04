@@ -26,6 +26,8 @@ import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { CreateUserArgs } from "./CreateUserArgs";
 import { UpdateUserArgs } from "./UpdateUserArgs";
 import { DeleteUserArgs } from "./DeleteUserArgs";
+import { UserMovieMapping } from "../../userMovieMapping/base/UserMovieMapping";
+import { UserSeriesMapping } from "../../userSeriesMapping/base/UserSeriesMapping";
 import { UserService } from "../user.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => User)
@@ -86,7 +88,27 @@ export class UserResolverBase {
   async createUser(@graphql.Args() args: CreateUserArgs): Promise<User> {
     return await this.service.createUser({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        userMovieMapping: args.data.userMovieMapping
+          ? {
+              connect: args.data.userMovieMapping,
+            }
+          : undefined,
+
+        userMovieMappings: args.data.userMovieMappings
+          ? {
+              connect: args.data.userMovieMappings,
+            }
+          : undefined,
+
+        userSeriesMapping: args.data.userSeriesMapping
+          ? {
+              connect: args.data.userSeriesMapping,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -101,7 +123,27 @@ export class UserResolverBase {
     try {
       return await this.service.updateUser({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          userMovieMapping: args.data.userMovieMapping
+            ? {
+                connect: args.data.userMovieMapping,
+              }
+            : undefined,
+
+          userMovieMappings: args.data.userMovieMappings
+            ? {
+                connect: args.data.userMovieMappings,
+              }
+            : undefined,
+
+          userSeriesMapping: args.data.userSeriesMapping
+            ? {
+                connect: args.data.userSeriesMapping,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -130,5 +172,68 @@ export class UserResolverBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => UserMovieMapping, {
+    nullable: true,
+    name: "userMovieMapping",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "UserMovieMapping",
+    action: "read",
+    possession: "any",
+  })
+  async getUserMovieMapping(
+    @graphql.Parent() parent: User
+  ): Promise<UserMovieMapping | null> {
+    const result = await this.service.getUserMovieMapping(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => UserMovieMapping, {
+    nullable: true,
+    name: "userMovieMappings",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "UserMovieMapping",
+    action: "read",
+    possession: "any",
+  })
+  async getUserMovieMappings(
+    @graphql.Parent() parent: User
+  ): Promise<UserMovieMapping | null> {
+    const result = await this.service.getUserMovieMappings(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => UserSeriesMapping, {
+    nullable: true,
+    name: "userSeriesMapping",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "UserSeriesMapping",
+    action: "read",
+    possession: "any",
+  })
+  async getUserSeriesMapping(
+    @graphql.Parent() parent: User
+  ): Promise<UserSeriesMapping | null> {
+    const result = await this.service.getUserSeriesMapping(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 }

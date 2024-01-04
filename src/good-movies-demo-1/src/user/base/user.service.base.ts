@@ -10,7 +10,14 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "../../prisma/prisma.service";
-import { Prisma, User } from "@prisma/client";
+
+import {
+  Prisma,
+  User, // @ts-ignore
+  UserMovieMapping, // @ts-ignore
+  UserSeriesMapping,
+} from "@prisma/client";
+
 import { PasswordService } from "../../auth/password.service";
 import { transformStringFieldUpdateInput } from "../../prisma.util";
 
@@ -70,5 +77,35 @@ export class UserServiceBase {
     args: Prisma.SelectSubset<T, Prisma.UserDeleteArgs>
   ): Promise<User> {
     return this.prisma.user.delete(args);
+  }
+
+  async getUserMovieMapping(
+    parentId: string
+  ): Promise<UserMovieMapping | null> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: parentId },
+      })
+      .userMovieMapping();
+  }
+
+  async getUserMovieMappings(
+    parentId: string
+  ): Promise<UserMovieMapping | null> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: parentId },
+      })
+      .userMovieMappings();
+  }
+
+  async getUserSeriesMapping(
+    parentId: string
+  ): Promise<UserSeriesMapping | null> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: parentId },
+      })
+      .userSeriesMapping();
   }
 }

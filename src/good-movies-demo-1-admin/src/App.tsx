@@ -9,22 +9,34 @@ import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
 import { UserShow } from "./user/UserShow";
-import { OrderList } from "./order/OrderList";
-import { OrderCreate } from "./order/OrderCreate";
-import { OrderEdit } from "./order/OrderEdit";
-import { OrderShow } from "./order/OrderShow";
-import { CustomerList } from "./customer/CustomerList";
-import { CustomerCreate } from "./customer/CustomerCreate";
-import { CustomerEdit } from "./customer/CustomerEdit";
-import { CustomerShow } from "./customer/CustomerShow";
-import { AddressList } from "./address/AddressList";
-import { AddressCreate } from "./address/AddressCreate";
-import { AddressEdit } from "./address/AddressEdit";
-import { AddressShow } from "./address/AddressShow";
-import { ProductList } from "./product/ProductList";
-import { ProductCreate } from "./product/ProductCreate";
-import { ProductEdit } from "./product/ProductEdit";
-import { ProductShow } from "./product/ProductShow";
+import { MovieList } from "./movie/MovieList";
+import { MovieCreate } from "./movie/MovieCreate";
+import { MovieEdit } from "./movie/MovieEdit";
+import { MovieShow } from "./movie/MovieShow";
+import { GenreList } from "./genre/GenreList";
+import { GenreCreate } from "./genre/GenreCreate";
+import { GenreEdit } from "./genre/GenreEdit";
+import { GenreShow } from "./genre/GenreShow";
+import { SeriesList } from "./series/SeriesList";
+import { SeriesCreate } from "./series/SeriesCreate";
+import { SeriesEdit } from "./series/SeriesEdit";
+import { SeriesShow } from "./series/SeriesShow";
+import { VideoContentList } from "./videoContent/VideoContentList";
+import { VideoContentCreate } from "./videoContent/VideoContentCreate";
+import { VideoContentEdit } from "./videoContent/VideoContentEdit";
+import { VideoContentShow } from "./videoContent/VideoContentShow";
+import { UserMovieMappingList } from "./userMovieMapping/UserMovieMappingList";
+import { UserMovieMappingCreate } from "./userMovieMapping/UserMovieMappingCreate";
+import { UserMovieMappingEdit } from "./userMovieMapping/UserMovieMappingEdit";
+import { UserMovieMappingShow } from "./userMovieMapping/UserMovieMappingShow";
+import { UserSeriesMappingList } from "./userSeriesMapping/UserSeriesMappingList";
+import { UserSeriesMappingCreate } from "./userSeriesMapping/UserSeriesMappingCreate";
+import { UserSeriesMappingEdit } from "./userSeriesMapping/UserSeriesMappingEdit";
+import { UserSeriesMappingShow } from "./userSeriesMapping/UserSeriesMappingShow";
+import { UserVideoContentMappingList } from "./userVideoContentMapping/UserVideoContentMappingList";
+import { UserVideoContentMappingCreate } from "./userVideoContentMapping/UserVideoContentMappingCreate";
+import { UserVideoContentMappingEdit } from "./userVideoContentMapping/UserVideoContentMappingEdit";
+import { UserVideoContentMappingShow } from "./userVideoContentMapping/UserVideoContentMappingShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -59,32 +71,53 @@ const App = (): React.ReactElement => {
           show={UserShow}
         />
         <Resource
-          name="Order"
-          list={OrderList}
-          edit={OrderEdit}
-          create={OrderCreate}
-          show={OrderShow}
+          name="Movie"
+          list={MovieList}
+          edit={MovieEdit}
+          create={MovieCreate}
+          show={MovieShow}
         />
         <Resource
-          name="Customer"
-          list={CustomerList}
-          edit={CustomerEdit}
-          create={CustomerCreate}
-          show={CustomerShow}
+          name="Genre"
+          list={GenreList}
+          edit={GenreEdit}
+          create={GenreCreate}
+          show={GenreShow}
         />
         <Resource
-          name="Address"
-          list={AddressList}
-          edit={AddressEdit}
-          create={AddressCreate}
-          show={AddressShow}
+          name="Series"
+          list={SeriesList}
+          edit={SeriesEdit}
+          create={SeriesCreate}
+          show={SeriesShow}
         />
         <Resource
-          name="Product"
-          list={ProductList}
-          edit={ProductEdit}
-          create={ProductCreate}
-          show={ProductShow}
+          name="VideoContent"
+          list={VideoContentList}
+          edit={VideoContentEdit}
+          create={VideoContentCreate}
+          show={VideoContentShow}
+        />
+        <Resource
+          name="UserMovieMapping"
+          list={UserMovieMappingList}
+          edit={UserMovieMappingEdit}
+          create={UserMovieMappingCreate}
+          show={UserMovieMappingShow}
+        />
+        <Resource
+          name="UserSeriesMapping"
+          list={UserSeriesMappingList}
+          edit={UserSeriesMappingEdit}
+          create={UserSeriesMappingCreate}
+          show={UserSeriesMappingShow}
+        />
+        <Resource
+          name="UserVideoContentMapping"
+          list={UserVideoContentMappingList}
+          edit={UserVideoContentMappingEdit}
+          create={UserVideoContentMappingCreate}
+          show={UserVideoContentMappingShow}
         />
       </Admin>
     </div>

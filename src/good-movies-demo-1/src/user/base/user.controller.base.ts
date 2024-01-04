@@ -47,15 +47,55 @@ export class UserControllerBase {
   })
   async createUser(@common.Body() data: UserCreateInput): Promise<User> {
     return await this.service.createUser({
-      data: data,
+      data: {
+        ...data,
+
+        userMovieMapping: data.userMovieMapping
+          ? {
+              connect: data.userMovieMapping,
+            }
+          : undefined,
+
+        userMovieMappings: data.userMovieMappings
+          ? {
+              connect: data.userMovieMappings,
+            }
+          : undefined,
+
+        userSeriesMapping: data.userSeriesMapping
+          ? {
+              connect: data.userSeriesMapping,
+            }
+          : undefined,
+      },
       select: {
         createdAt: true,
-        firstName: true,
+        email: true,
         id: true,
-        lastName: true,
+        link: true,
         roles: true,
         updatedAt: true,
+
+        userMovieMapping: {
+          select: {
+            id: true,
+          },
+        },
+
+        userMovieMappings: {
+          select: {
+            id: true,
+          },
+        },
+
         username: true,
+        UserName: true,
+
+        userSeriesMapping: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
@@ -78,12 +118,32 @@ export class UserControllerBase {
       ...args,
       select: {
         createdAt: true,
-        firstName: true,
+        email: true,
         id: true,
-        lastName: true,
+        link: true,
         roles: true,
         updatedAt: true,
+
+        userMovieMapping: {
+          select: {
+            id: true,
+          },
+        },
+
+        userMovieMappings: {
+          select: {
+            id: true,
+          },
+        },
+
         username: true,
+        UserName: true,
+
+        userSeriesMapping: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
@@ -107,12 +167,32 @@ export class UserControllerBase {
       where: params,
       select: {
         createdAt: true,
-        firstName: true,
+        email: true,
         id: true,
-        lastName: true,
+        link: true,
         roles: true,
         updatedAt: true,
+
+        userMovieMapping: {
+          select: {
+            id: true,
+          },
+        },
+
+        userMovieMappings: {
+          select: {
+            id: true,
+          },
+        },
+
         username: true,
+        UserName: true,
+
+        userSeriesMapping: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
     if (result === null) {
@@ -142,15 +222,55 @@ export class UserControllerBase {
     try {
       return await this.service.updateUser({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          userMovieMapping: data.userMovieMapping
+            ? {
+                connect: data.userMovieMapping,
+              }
+            : undefined,
+
+          userMovieMappings: data.userMovieMappings
+            ? {
+                connect: data.userMovieMappings,
+              }
+            : undefined,
+
+          userSeriesMapping: data.userSeriesMapping
+            ? {
+                connect: data.userSeriesMapping,
+              }
+            : undefined,
+        },
         select: {
           createdAt: true,
-          firstName: true,
+          email: true,
           id: true,
-          lastName: true,
+          link: true,
           roles: true,
           updatedAt: true,
+
+          userMovieMapping: {
+            select: {
+              id: true,
+            },
+          },
+
+          userMovieMappings: {
+            select: {
+              id: true,
+            },
+          },
+
           username: true,
+          UserName: true,
+
+          userSeriesMapping: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {
@@ -182,12 +302,32 @@ export class UserControllerBase {
         where: params,
         select: {
           createdAt: true,
-          firstName: true,
+          email: true,
           id: true,
-          lastName: true,
+          link: true,
           roles: true,
           updatedAt: true,
+
+          userMovieMapping: {
+            select: {
+              id: true,
+            },
+          },
+
+          userMovieMappings: {
+            select: {
+              id: true,
+            },
+          },
+
           username: true,
+          UserName: true,
+
+          userSeriesMapping: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {

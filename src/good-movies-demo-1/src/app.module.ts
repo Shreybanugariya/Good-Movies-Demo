@@ -1,9 +1,12 @@
 import { Module } from "@nestjs/common";
 import { UserModule } from "./user/user.module";
-import { OrderModule } from "./order/order.module";
-import { CustomerModule } from "./customer/customer.module";
-import { AddressModule } from "./address/address.module";
-import { ProductModule } from "./product/product.module";
+import { MovieModule } from "./movie/movie.module";
+import { GenreModule } from "./genre/genre.module";
+import { SeriesModule } from "./series/series.module";
+import { VideoContentModule } from "./videoContent/videoContent.module";
+import { UserMovieMappingModule } from "./userMovieMapping/userMovieMapping.module";
+import { UserSeriesMappingModule } from "./userSeriesMapping/userSeriesMapping.module";
+import { UserVideoContentMappingModule } from "./userVideoContentMapping/userVideoContentMapping.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
@@ -22,10 +25,13 @@ import { AuthModule } from "./auth/auth.module";
     ACLModule,
     AuthModule,
     UserModule,
-    OrderModule,
-    CustomerModule,
-    AddressModule,
-    ProductModule,
+    MovieModule,
+    GenreModule,
+    SeriesModule,
+    VideoContentModule,
+    UserMovieMappingModule,
+    UserSeriesMappingModule,
+    UserVideoContentMappingModule,
     HealthModule,
     PrismaModule,
     SecretsManagerModule,

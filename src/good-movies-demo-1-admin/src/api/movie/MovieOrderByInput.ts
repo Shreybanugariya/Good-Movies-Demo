@@ -3,7 +3,7 @@ import { SortOrder } from "../../util/SortOrder";
 export type MovieOrderByInput = {
   createdAt?: SortOrder;
   description?: SortOrder;
-  Director?: SortOrder;
+  Id?: SortOrder;
   id?: SortOrder;
   mustWatchCount?: SortOrder;
   name?: SortOrder;

@@ -53,6 +53,10 @@ export class SeriesControllerBase {
       data: {
         ...data,
 
+        director: {
+          connect: data.director,
+        },
+
         userSeriesMapping: data.userSeriesMapping
           ? {
               connect: data.userSeriesMapping,
@@ -62,7 +66,13 @@ export class SeriesControllerBase {
       select: {
         createdAt: true,
         descption: true,
-        director: true,
+
+        director: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         mustWatchCount: true,
         name: true,
@@ -97,7 +107,13 @@ export class SeriesControllerBase {
       select: {
         createdAt: true,
         descption: true,
-        director: true,
+
+        director: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         mustWatchCount: true,
         name: true,
@@ -133,7 +149,13 @@ export class SeriesControllerBase {
       select: {
         createdAt: true,
         descption: true,
-        director: true,
+
+        director: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         mustWatchCount: true,
         name: true,
@@ -177,6 +199,10 @@ export class SeriesControllerBase {
         data: {
           ...data,
 
+          director: {
+            connect: data.director,
+          },
+
           userSeriesMapping: data.userSeriesMapping
             ? {
                 connect: data.userSeriesMapping,
@@ -186,7 +212,13 @@ export class SeriesControllerBase {
         select: {
           createdAt: true,
           descption: true,
-          director: true,
+
+          director: {
+            select: {
+              id: true,
+            },
+          },
+
           id: true,
           mustWatchCount: true,
           name: true,
@@ -230,7 +262,13 @@ export class SeriesControllerBase {
         select: {
           createdAt: true,
           descption: true,
-          director: true,
+
+          director: {
+            select: {
+              id: true,
+            },
+          },
+
           id: true,
           mustWatchCount: true,
           name: true,

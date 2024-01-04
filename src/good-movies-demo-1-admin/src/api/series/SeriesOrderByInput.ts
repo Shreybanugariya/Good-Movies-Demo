@@ -3,7 +3,7 @@ import { SortOrder } from "../../util/SortOrder";
 export type SeriesOrderByInput = {
   createdAt?: SortOrder;
   descption?: SortOrder;
-  director?: SortOrder;
+  ID?: SortOrder;
   id?: SortOrder;
   mustWatchCount?: SortOrder;
   name?: SortOrder;

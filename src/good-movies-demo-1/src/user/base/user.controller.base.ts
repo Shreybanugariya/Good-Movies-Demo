@@ -50,6 +50,12 @@ export class UserControllerBase {
       data: {
         ...data,
 
+        movies: data.movies
+          ? {
+              connect: data.movies,
+            }
+          : undefined,
+
         userMovieMapping: data.userMovieMapping
           ? {
               connect: data.userMovieMapping,
@@ -67,12 +73,25 @@ export class UserControllerBase {
               connect: data.userSeriesMapping,
             }
           : undefined,
+
+        webseries: data.webseries
+          ? {
+              connect: data.webseries,
+            }
+          : undefined,
       },
       select: {
         createdAt: true,
         email: true,
         id: true,
         link: true,
+
+        movies: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
 
@@ -92,6 +111,12 @@ export class UserControllerBase {
         UserName: true,
 
         userSeriesMapping: {
+          select: {
+            id: true,
+          },
+        },
+
+        webseries: {
           select: {
             id: true,
           },
@@ -121,6 +146,13 @@ export class UserControllerBase {
         email: true,
         id: true,
         link: true,
+
+        movies: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
 
@@ -140,6 +172,12 @@ export class UserControllerBase {
         UserName: true,
 
         userSeriesMapping: {
+          select: {
+            id: true,
+          },
+        },
+
+        webseries: {
           select: {
             id: true,
           },
@@ -170,6 +208,13 @@ export class UserControllerBase {
         email: true,
         id: true,
         link: true,
+
+        movies: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
 
@@ -189,6 +234,12 @@ export class UserControllerBase {
         UserName: true,
 
         userSeriesMapping: {
+          select: {
+            id: true,
+          },
+        },
+
+        webseries: {
           select: {
             id: true,
           },
@@ -225,6 +276,12 @@ export class UserControllerBase {
         data: {
           ...data,
 
+          movies: data.movies
+            ? {
+                connect: data.movies,
+              }
+            : undefined,
+
           userMovieMapping: data.userMovieMapping
             ? {
                 connect: data.userMovieMapping,
@@ -242,12 +299,25 @@ export class UserControllerBase {
                 connect: data.userSeriesMapping,
               }
             : undefined,
+
+          webseries: data.webseries
+            ? {
+                connect: data.webseries,
+              }
+            : undefined,
         },
         select: {
           createdAt: true,
           email: true,
           id: true,
           link: true,
+
+          movies: {
+            select: {
+              id: true,
+            },
+          },
+
           roles: true,
           updatedAt: true,
 
@@ -267,6 +337,12 @@ export class UserControllerBase {
           UserName: true,
 
           userSeriesMapping: {
+            select: {
+              id: true,
+            },
+          },
+
+          webseries: {
             select: {
               id: true,
             },
@@ -305,6 +381,13 @@ export class UserControllerBase {
           email: true,
           id: true,
           link: true,
+
+          movies: {
+            select: {
+              id: true,
+            },
+          },
+
           roles: true,
           updatedAt: true,
 
@@ -324,6 +407,12 @@ export class UserControllerBase {
           UserName: true,
 
           userSeriesMapping: {
+            select: {
+              id: true,
+            },
+          },
+
+          webseries: {
             select: {
               id: true,
             },

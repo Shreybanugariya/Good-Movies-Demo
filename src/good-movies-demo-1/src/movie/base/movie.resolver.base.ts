@@ -28,6 +28,7 @@ import { UpdateMovieArgs } from "./UpdateMovieArgs";
 import { DeleteMovieArgs } from "./DeleteMovieArgs";
 import { GenreFindManyArgs } from "../../genre/base/GenreFindManyArgs";
 import { Genre } from "../../genre/base/Genre";
+import { User } from "../../user/base/User";
 import { MovieService } from "../movie.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Movie)
@@ -90,7 +91,13 @@ export class MovieResolverBase {
   async createMovie(@graphql.Args() args: CreateMovieArgs): Promise<Movie> {
     return await this.service.createMovie({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        Director: {
+          connect: args.data.Director,
+        },
+      },
     });
   }
 
@@ -107,7 +114,13 @@ export class MovieResolverBase {
     try {
       return await this.service.updateMovie({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          Director: {
+            connect: args.data.Director,
+          },
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -158,5 +171,24 @@ export class MovieResolverBase {
     }
 
     return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => User, {
+    nullable: true,
+    name: "director",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
+  async getDirector(@graphql.Parent() parent: Movie): Promise<User | null> {
+    const result = await this.service.getDirector(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 }

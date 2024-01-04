@@ -14,12 +14,13 @@ import { ApiProperty } from "@nestjs/swagger";
 import {
   IsDate,
   IsString,
-  IsOptional,
   ValidateNested,
+  IsOptional,
   IsInt,
   IsNumber,
 } from "class-validator";
 import { Type } from "class-transformer";
+import { User } from "../../user/base/User";
 import { Genre } from "../../genre/base/Genre";
 import { Decimal } from "decimal.js";
 import { UserSeriesMapping } from "../../userSeriesMapping/base/UserSeriesMapping";
@@ -43,15 +44,12 @@ class Series {
   descption!: string;
 
   @ApiProperty({
-    required: false,
-    type: String,
+    required: true,
+    type: () => User,
   })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  director!: string | null;
+  @ValidateNested()
+  @Type(() => User)
+  director?: User;
 
   @ApiProperty({
     required: true,

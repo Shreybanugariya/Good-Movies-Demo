@@ -14,6 +14,7 @@ import {
 import { MOVIE_TITLE_FIELD } from "../movie/MovieTitle";
 import { SERIES_TITLE_FIELD } from "./SeriesTitle";
 import { VIDEOCONTENT_TITLE_FIELD } from "../videoContent/VideoContentTitle";
+import { USER_TITLE_FIELD } from "../user/UserTitle";
 import { USERSERIESMAPPING_TITLE_FIELD } from "../userSeriesMapping/UserSeriesMappingTitle";
 
 export const SeriesShow = (props: ShowProps): React.ReactElement => {
@@ -22,7 +23,9 @@ export const SeriesShow = (props: ShowProps): React.ReactElement => {
       <SimpleShowLayout>
         <DateField source="createdAt" label="Created At" />
         <TextField label="Description" source="descption" />
-        <TextField label="Director" source="director" />
+        <ReferenceField label="Director" source="user.id" reference="User">
+          <TextField source={USER_TITLE_FIELD} />
+        </ReferenceField>
         <TextField label="ID" source="id" />
         <TextField label="Must Watch Count" source="mustWatchCount" />
         <TextField label="Name" source="name" />

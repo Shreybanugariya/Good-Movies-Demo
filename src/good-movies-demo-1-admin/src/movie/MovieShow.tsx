@@ -6,14 +6,15 @@ import {
   ShowProps,
   DateField,
   TextField,
+  ReferenceField,
   ReferenceManyField,
   Datagrid,
-  ReferenceField,
 } from "react-admin";
 
 import { MOVIE_TITLE_FIELD } from "./MovieTitle";
 import { SERIES_TITLE_FIELD } from "../series/SeriesTitle";
 import { VIDEOCONTENT_TITLE_FIELD } from "../videoContent/VideoContentTitle";
+import { USER_TITLE_FIELD } from "../user/UserTitle";
 
 export const MovieShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -21,7 +22,9 @@ export const MovieShow = (props: ShowProps): React.ReactElement => {
       <SimpleShowLayout>
         <DateField source="createdAt" label="Created At" />
         <TextField label="Description" source="description" />
-        <TextField label="Director" source="Director" />
+        <ReferenceField label="Director" source="user.id" reference="User">
+          <TextField source={USER_TITLE_FIELD} />
+        </ReferenceField>
         <TextField label="ID" source="id" />
         <TextField label="Must watch count" source="mustWatchCount" />
         <TextField label="name" source="name" />

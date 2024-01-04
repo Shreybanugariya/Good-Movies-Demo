@@ -19,6 +19,7 @@ import {
   IsInt,
 } from "class-validator";
 import { Type } from "class-transformer";
+import { User } from "../../user/base/User";
 import { Genre } from "../../genre/base/Genre";
 
 @ObjectType()
@@ -41,11 +42,11 @@ class Movie {
 
   @ApiProperty({
     required: true,
-    type: String,
+    type: () => User,
   })
-  @IsString()
-  @Field(() => String)
-  Director!: string;
+  @ValidateNested()
+  @Type(() => User)
+  Director?: User;
 
   @ApiProperty({
     required: true,

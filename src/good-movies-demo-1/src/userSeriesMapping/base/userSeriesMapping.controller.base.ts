@@ -210,6 +210,13 @@ export class UserSeriesMappingControllerBase {
         email: true,
         id: true,
         link: true,
+
+        movies: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
 
@@ -229,6 +236,12 @@ export class UserSeriesMappingControllerBase {
         UserName: true,
 
         userSeriesMapping: {
+          select: {
+            id: true,
+          },
+        },
+
+        webseries: {
           select: {
             id: true,
           },
@@ -327,7 +340,13 @@ export class UserSeriesMappingControllerBase {
       select: {
         createdAt: true,
         descption: true,
-        director: true,
+
+        director: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         mustWatchCount: true,
         name: true,

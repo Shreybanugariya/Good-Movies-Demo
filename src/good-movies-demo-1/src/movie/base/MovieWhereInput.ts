@@ -14,6 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
+import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 import { GenreListRelationFilter } from "../../genre/base/GenreListRelationFilter";
 import { IntNullableFilter } from "../../util/IntNullableFilter";
 
@@ -32,14 +33,15 @@ class MovieWhereInput {
 
   @ApiProperty({
     required: false,
-    type: StringFilter,
+    type: () => UserWhereUniqueInput,
   })
-  @Type(() => StringFilter)
+  @ValidateNested()
+  @Type(() => UserWhereUniqueInput)
   @IsOptional()
-  @Field(() => StringFilter, {
+  @Field(() => UserWhereUniqueInput, {
     nullable: true,
   })
-  Director?: StringFilter;
+  Director?: UserWhereUniqueInput;
 
   @ApiProperty({
     required: false,

@@ -50,7 +50,7 @@ class SeriesOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  director?: SortOrder;
+  ID?: SortOrder;
 
   @ApiProperty({
     required: false,

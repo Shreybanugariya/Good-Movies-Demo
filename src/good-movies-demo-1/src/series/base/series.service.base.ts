@@ -15,6 +15,7 @@ import {
   Prisma,
   Series, // @ts-ignore
   Genre, // @ts-ignore
+  User, // @ts-ignore
   UserSeriesMapping,
 } from "@prisma/client";
 
@@ -62,6 +63,14 @@ export class SeriesServiceBase {
         where: { id: parentId },
       })
       .genre(args);
+  }
+
+  async getDirector(parentId: string): Promise<User | null> {
+    return this.prisma.series
+      .findUnique({
+        where: { id: parentId },
+      })
+      .director();
   }
 
   async getUserSeriesMapping(

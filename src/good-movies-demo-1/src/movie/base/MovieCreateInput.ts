@@ -12,8 +12,9 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, ValidateNested, IsOptional, IsInt } from "class-validator";
-import { GenreCreateNestedManyWithoutMoviesInput } from "./GenreCreateNestedManyWithoutMoviesInput";
+import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 import { Type } from "class-transformer";
+import { GenreCreateNestedManyWithoutMoviesInput } from "./GenreCreateNestedManyWithoutMoviesInput";
 
 @InputType()
 class MovieCreateInput {
@@ -27,11 +28,12 @@ class MovieCreateInput {
 
   @ApiProperty({
     required: true,
-    type: String,
+    type: () => UserWhereUniqueInput,
   })
-  @IsString()
-  @Field(() => String)
-  Director!: string;
+  @ValidateNested()
+  @Type(() => UserWhereUniqueInput)
+  @Field(() => UserWhereUniqueInput)
+  Director!: UserWhereUniqueInput;
 
   @ApiProperty({
     required: true,

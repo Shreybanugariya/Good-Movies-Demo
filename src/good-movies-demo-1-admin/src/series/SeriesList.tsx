@@ -8,6 +8,7 @@ import {
   ReferenceField,
 } from "react-admin";
 import Pagination from "../Components/Pagination";
+import { USER_TITLE_FIELD } from "../user/UserTitle";
 import { USERSERIESMAPPING_TITLE_FIELD } from "../userSeriesMapping/UserSeriesMappingTitle";
 
 export const SeriesList = (props: ListProps): React.ReactElement => {
@@ -22,7 +23,9 @@ export const SeriesList = (props: ListProps): React.ReactElement => {
       <Datagrid rowClick="show">
         <DateField source="createdAt" label="Created At" />
         <TextField label="Description" source="descption" />
-        <TextField label="Director" source="director" />
+        <ReferenceField label="Director" source="user.id" reference="User">
+          <TextField source={USER_TITLE_FIELD} />
+        </ReferenceField>
         <TextField label="ID" source="id" />
         <TextField label="Must Watch Count" source="mustWatchCount" />
         <TextField label="Name" source="name" />

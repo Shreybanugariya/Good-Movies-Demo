@@ -28,6 +28,7 @@ import { UpdateSeriesArgs } from "./UpdateSeriesArgs";
 import { DeleteSeriesArgs } from "./DeleteSeriesArgs";
 import { GenreFindManyArgs } from "../../genre/base/GenreFindManyArgs";
 import { Genre } from "../../genre/base/Genre";
+import { User } from "../../user/base/User";
 import { UserSeriesMapping } from "../../userSeriesMapping/base/UserSeriesMapping";
 import { SeriesService } from "../series.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
@@ -96,6 +97,10 @@ export class SeriesResolverBase {
       data: {
         ...args.data,
 
+        director: {
+          connect: args.data.director,
+        },
+
         userSeriesMapping: args.data.userSeriesMapping
           ? {
               connect: args.data.userSeriesMapping,
@@ -120,6 +125,10 @@ export class SeriesResolverBase {
         ...args,
         data: {
           ...args.data,
+
+          director: {
+            connect: args.data.director,
+          },
 
           userSeriesMapping: args.data.userSeriesMapping
             ? {
@@ -177,6 +186,25 @@ export class SeriesResolverBase {
     }
 
     return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => User, {
+    nullable: true,
+    name: "director",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
+  async getDirector(@graphql.Parent() parent: Series): Promise<User | null> {
+    const result = await this.service.getDirector(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)

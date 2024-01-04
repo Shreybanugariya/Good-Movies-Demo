@@ -13,13 +13,14 @@ import { InputType, Field, Float } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import {
   IsString,
-  IsOptional,
   ValidateNested,
+  IsOptional,
   IsInt,
   IsNumber,
 } from "class-validator";
-import { GenreCreateNestedManyWithoutSeriesItemsInput } from "./GenreCreateNestedManyWithoutSeriesItemsInput";
+import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 import { Type } from "class-transformer";
+import { GenreCreateNestedManyWithoutSeriesItemsInput } from "./GenreCreateNestedManyWithoutSeriesItemsInput";
 import { Decimal } from "decimal.js";
 import { UserSeriesMappingWhereUniqueInput } from "../../userSeriesMapping/base/UserSeriesMappingWhereUniqueInput";
 
@@ -34,15 +35,13 @@ class SeriesCreateInput {
   descption!: string;
 
   @ApiProperty({
-    required: false,
-    type: String,
+    required: true,
+    type: () => UserWhereUniqueInput,
   })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  director?: string | null;
+  @ValidateNested()
+  @Type(() => UserWhereUniqueInput)
+  @Field(() => UserWhereUniqueInput)
+  director!: UserWhereUniqueInput;
 
   @ApiProperty({
     required: true,

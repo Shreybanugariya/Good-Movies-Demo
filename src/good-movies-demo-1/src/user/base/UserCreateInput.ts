@@ -12,12 +12,14 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsOptional, ValidateNested } from "class-validator";
+import { MovieWhereUniqueInput } from "../../movie/base/MovieWhereUniqueInput";
+import { Type } from "class-transformer";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
 import { UserMovieMappingWhereUniqueInput } from "../../userMovieMapping/base/UserMovieMappingWhereUniqueInput";
-import { Type } from "class-transformer";
 import { UserSeriesMappingWhereUniqueInput } from "../../userSeriesMapping/base/UserSeriesMappingWhereUniqueInput";
+import { SeriesWhereUniqueInput } from "../../series/base/SeriesWhereUniqueInput";
 
 @InputType()
 class UserCreateInput {
@@ -42,6 +44,18 @@ class UserCreateInput {
     nullable: true,
   })
   link?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => MovieWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => MovieWhereUniqueInput)
+  @IsOptional()
+  @Field(() => MovieWhereUniqueInput, {
+    nullable: true,
+  })
+  movies?: MovieWhereUniqueInput | null;
 
   @ApiProperty({
     required: true,
@@ -109,6 +123,18 @@ class UserCreateInput {
     nullable: true,
   })
   userSeriesMapping?: UserSeriesMappingWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => SeriesWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => SeriesWhereUniqueInput)
+  @IsOptional()
+  @Field(() => SeriesWhereUniqueInput, {
+    nullable: true,
+  })
+  webseries?: SeriesWhereUniqueInput | null;
 }
 
 export { UserCreateInput as UserCreateInput };

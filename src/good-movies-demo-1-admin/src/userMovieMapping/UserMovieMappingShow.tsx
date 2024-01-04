@@ -11,8 +11,10 @@ import {
   ReferenceField,
 } from "react-admin";
 
+import { MOVIE_TITLE_FIELD } from "../movie/MovieTitle";
 import { USERMOVIEMAPPING_TITLE_FIELD } from "./UserMovieMappingTitle";
 import { USERSERIESMAPPING_TITLE_FIELD } from "../userSeriesMapping/UserSeriesMappingTitle";
+import { SERIES_TITLE_FIELD } from "../series/SeriesTitle";
 
 export const UserMovieMappingShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -31,6 +33,9 @@ export const UserMovieMappingShow = (props: ShowProps): React.ReactElement => {
             <TextField label="email" source="email" />
             <TextField label="ID" source="id" />
             <TextField label="link" source="link" />
+            <ReferenceField label="Movies" source="movie.id" reference="Movie">
+              <TextField source={MOVIE_TITLE_FIELD} />
+            </ReferenceField>
             <TextField label="Roles" source="roles" />
             <DateField source="updatedAt" label="Updated At" />
             <ReferenceField
@@ -55,6 +60,13 @@ export const UserMovieMappingShow = (props: ShowProps): React.ReactElement => {
               reference="UserSeriesMapping"
             >
               <TextField source={USERSERIESMAPPING_TITLE_FIELD} />
+            </ReferenceField>
+            <ReferenceField
+              label="webseries"
+              source="series.id"
+              reference="Series"
+            >
+              <TextField source={SERIES_TITLE_FIELD} />
             </ReferenceField>
           </Datagrid>
         </ReferenceManyField>
@@ -68,6 +80,9 @@ export const UserMovieMappingShow = (props: ShowProps): React.ReactElement => {
             <TextField label="email" source="email" />
             <TextField label="ID" source="id" />
             <TextField label="link" source="link" />
+            <ReferenceField label="Movies" source="movie.id" reference="Movie">
+              <TextField source={MOVIE_TITLE_FIELD} />
+            </ReferenceField>
             <TextField label="Roles" source="roles" />
             <DateField source="updatedAt" label="Updated At" />
             <ReferenceField
@@ -92,6 +107,13 @@ export const UserMovieMappingShow = (props: ShowProps): React.ReactElement => {
               reference="UserSeriesMapping"
             >
               <TextField source={USERSERIESMAPPING_TITLE_FIELD} />
+            </ReferenceField>
+            <ReferenceField
+              label="webseries"
+              source="series.id"
+              reference="Series"
+            >
+              <TextField source={SERIES_TITLE_FIELD} />
             </ReferenceField>
           </Datagrid>
         </ReferenceManyField>

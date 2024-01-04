@@ -5,6 +5,7 @@ export type UserOrderByInput = {
   email?: SortOrder;
   id?: SortOrder;
   link?: SortOrder;
+  moviesId?: SortOrder;
   password?: SortOrder;
   roles?: SortOrder;
   updatedAt?: SortOrder;
@@ -13,4 +14,5 @@ export type UserOrderByInput = {
   username?: SortOrder;
   UserName?: SortOrder;
   userSeriesMappingId?: SortOrder;
+  webseriesId?: SortOrder;
 };

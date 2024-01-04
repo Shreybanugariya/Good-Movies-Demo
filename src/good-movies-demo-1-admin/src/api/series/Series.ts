@@ -1,3 +1,4 @@
+import { User } from "../user/User";
 import { Genre } from "../genre/Genre";
 import { Decimal } from "decimal.js";
 import { UserSeriesMapping } from "../userSeriesMapping/UserSeriesMapping";
@@ -5,7 +6,7 @@ import { UserSeriesMapping } from "../userSeriesMapping/UserSeriesMapping";
 export type Series = {
   createdAt: Date;
   descption: string;
-  director: string | null;
+  director?: User;
   genre?: Array<Genre>;
   id: string;
   mustWatchCount: number;

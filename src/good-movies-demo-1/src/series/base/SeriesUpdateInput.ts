@@ -18,8 +18,9 @@ import {
   IsInt,
   IsNumber,
 } from "class-validator";
-import { GenreUpdateManyWithoutSeriesItemsInput } from "./GenreUpdateManyWithoutSeriesItemsInput";
+import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 import { Type } from "class-transformer";
+import { GenreUpdateManyWithoutSeriesItemsInput } from "./GenreUpdateManyWithoutSeriesItemsInput";
 import { Decimal } from "decimal.js";
 import { UserSeriesMappingWhereUniqueInput } from "../../userSeriesMapping/base/UserSeriesMappingWhereUniqueInput";
 
@@ -38,14 +39,15 @@ class SeriesUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: String,
+    type: () => UserWhereUniqueInput,
   })
-  @IsString()
+  @ValidateNested()
+  @Type(() => UserWhereUniqueInput)
   @IsOptional()
-  @Field(() => String, {
+  @Field(() => UserWhereUniqueInput, {
     nullable: true,
   })
-  director?: string | null;
+  director?: UserWhereUniqueInput;
 
   @ApiProperty({
     required: false,

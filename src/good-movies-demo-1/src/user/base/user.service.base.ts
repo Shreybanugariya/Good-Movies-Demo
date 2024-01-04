@@ -14,8 +14,10 @@ import { PrismaService } from "../../prisma/prisma.service";
 import {
   Prisma,
   User, // @ts-ignore
+  Movie, // @ts-ignore
   UserMovieMapping, // @ts-ignore
-  UserSeriesMapping,
+  UserSeriesMapping, // @ts-ignore
+  Series,
 } from "@prisma/client";
 
 import { PasswordService } from "../../auth/password.service";
@@ -79,6 +81,14 @@ export class UserServiceBase {
     return this.prisma.user.delete(args);
   }
 
+  async getMovies(parentId: string): Promise<Movie | null> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: parentId },
+      })
+      .movies();
+  }
+
   async getUserMovieMapping(
     parentId: string
   ): Promise<UserMovieMapping | null> {
@@ -107,5 +117,13 @@ export class UserServiceBase {
         where: { id: parentId },
       })
       .userSeriesMapping();
+  }
+
+  async getWebseries(parentId: string): Promise<Series | null> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: parentId },
+      })
+      .webseries();
   }
 }

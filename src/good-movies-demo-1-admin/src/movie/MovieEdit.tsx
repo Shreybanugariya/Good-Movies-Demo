@@ -5,11 +5,14 @@ import {
   SimpleForm,
   EditProps,
   TextInput,
+  ReferenceInput,
+  SelectInput,
   ReferenceArrayInput,
   SelectArrayInput,
   NumberInput,
 } from "react-admin";
 
+import { UserTitle } from "../user/UserTitle";
 import { GenreTitle } from "../genre/GenreTitle";
 
 export const MovieEdit = (props: EditProps): React.ReactElement => {
@@ -17,7 +20,9 @@ export const MovieEdit = (props: EditProps): React.ReactElement => {
     <Edit {...props}>
       <SimpleForm>
         <TextInput label="Description" multiline source="description" />
-        <TextInput label="Director" source="Director" />
+        <ReferenceInput source="Director.id" reference="User" label="Director">
+          <SelectInput optionText={UserTitle} />
+        </ReferenceInput>
         <ReferenceArrayInput
           source="genre"
           reference="Genre"

@@ -14,7 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 import { GenreListRelationFilter } from "../../genre/base/GenreListRelationFilter";
 import { IntFilter } from "../../util/IntFilter";
 import { DecimalFilter } from "../../util/DecimalFilter";
@@ -35,14 +35,15 @@ class SeriesWhereInput {
 
   @ApiProperty({
     required: false,
-    type: StringNullableFilter,
+    type: () => UserWhereUniqueInput,
   })
-  @Type(() => StringNullableFilter)
+  @ValidateNested()
+  @Type(() => UserWhereUniqueInput)
   @IsOptional()
-  @Field(() => StringNullableFilter, {
+  @Field(() => UserWhereUniqueInput, {
     nullable: true,
   })
-  director?: StringNullableFilter;
+  director?: UserWhereUniqueInput;
 
   @ApiProperty({
     required: false,

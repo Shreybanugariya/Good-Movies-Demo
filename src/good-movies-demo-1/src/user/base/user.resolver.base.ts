@@ -26,8 +26,10 @@ import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { CreateUserArgs } from "./CreateUserArgs";
 import { UpdateUserArgs } from "./UpdateUserArgs";
 import { DeleteUserArgs } from "./DeleteUserArgs";
+import { Movie } from "../../movie/base/Movie";
 import { UserMovieMapping } from "../../userMovieMapping/base/UserMovieMapping";
 import { UserSeriesMapping } from "../../userSeriesMapping/base/UserSeriesMapping";
+import { Series } from "../../series/base/Series";
 import { UserService } from "../user.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => User)
@@ -91,6 +93,12 @@ export class UserResolverBase {
       data: {
         ...args.data,
 
+        movies: args.data.movies
+          ? {
+              connect: args.data.movies,
+            }
+          : undefined,
+
         userMovieMapping: args.data.userMovieMapping
           ? {
               connect: args.data.userMovieMapping,
@@ -106,6 +114,12 @@ export class UserResolverBase {
         userSeriesMapping: args.data.userSeriesMapping
           ? {
               connect: args.data.userSeriesMapping,
+            }
+          : undefined,
+
+        webseries: args.data.webseries
+          ? {
+              connect: args.data.webseries,
             }
           : undefined,
       },
@@ -126,6 +140,12 @@ export class UserResolverBase {
         data: {
           ...args.data,
 
+          movies: args.data.movies
+            ? {
+                connect: args.data.movies,
+              }
+            : undefined,
+
           userMovieMapping: args.data.userMovieMapping
             ? {
                 connect: args.data.userMovieMapping,
@@ -141,6 +161,12 @@ export class UserResolverBase {
           userSeriesMapping: args.data.userSeriesMapping
             ? {
                 connect: args.data.userSeriesMapping,
+              }
+            : undefined,
+
+          webseries: args.data.webseries
+            ? {
+                connect: args.data.webseries,
               }
             : undefined,
         },
@@ -172,6 +198,25 @@ export class UserResolverBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Movie, {
+    nullable: true,
+    name: "movies",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "Movie",
+    action: "read",
+    possession: "any",
+  })
+  async getMovies(@graphql.Parent() parent: User): Promise<Movie | null> {
+    const result = await this.service.getMovies(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
@@ -230,6 +275,25 @@ export class UserResolverBase {
     @graphql.Parent() parent: User
   ): Promise<UserSeriesMapping | null> {
     const result = await this.service.getUserSeriesMapping(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Series, {
+    nullable: true,
+    name: "webseries",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "Series",
+    action: "read",
+    possession: "any",
+  })
+  async getWebseries(@graphql.Parent() parent: User): Promise<Series | null> {
+    const result = await this.service.getWebseries(parent.id);
 
     if (!result) {
       return null;

@@ -5,13 +5,14 @@ import {
   SimpleForm,
   CreateProps,
   TextInput,
+  ReferenceInput,
+  SelectInput,
   ReferenceArrayInput,
   SelectArrayInput,
   NumberInput,
-  ReferenceInput,
-  SelectInput,
 } from "react-admin";
 
+import { UserTitle } from "../user/UserTitle";
 import { GenreTitle } from "../genre/GenreTitle";
 import { UserSeriesMappingTitle } from "../userSeriesMapping/UserSeriesMappingTitle";
 
@@ -20,7 +21,9 @@ export const SeriesCreate = (props: CreateProps): React.ReactElement => {
     <Create {...props}>
       <SimpleForm>
         <TextInput label="Description" multiline source="descption" />
-        <TextInput label="Director" source="director" />
+        <ReferenceInput source="director.id" reference="User" label="Director">
+          <SelectInput optionText={UserTitle} />
+        </ReferenceInput>
         <ReferenceArrayInput
           source="genre"
           reference="Genre"

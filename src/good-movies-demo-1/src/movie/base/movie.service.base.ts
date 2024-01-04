@@ -14,7 +14,8 @@ import { PrismaService } from "../../prisma/prisma.service";
 import {
   Prisma,
   Movie, // @ts-ignore
-  Genre,
+  Genre, // @ts-ignore
+  User,
 } from "@prisma/client";
 
 export class MovieServiceBase {
@@ -61,5 +62,13 @@ export class MovieServiceBase {
         where: { id: parentId },
       })
       .genre(args);
+  }
+
+  async getDirector(parentId: string): Promise<User | null> {
+    return this.prisma.movie
+      .findUnique({
+        where: { id: parentId },
+      })
+      .Director();
   }
 }

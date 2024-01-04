@@ -11,8 +11,11 @@ import {
   ReferenceField,
 } from "react-admin";
 
+import { MOVIE_TITLE_FIELD } from "../movie/MovieTitle";
 import { USERMOVIEMAPPING_TITLE_FIELD } from "../userMovieMapping/UserMovieMappingTitle";
 import { USERSERIESMAPPING_TITLE_FIELD } from "./UserSeriesMappingTitle";
+import { SERIES_TITLE_FIELD } from "../series/SeriesTitle";
+import { USER_TITLE_FIELD } from "../user/UserTitle";
 
 export const UserSeriesMappingShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -31,6 +34,9 @@ export const UserSeriesMappingShow = (props: ShowProps): React.ReactElement => {
             <TextField label="email" source="email" />
             <TextField label="ID" source="id" />
             <TextField label="link" source="link" />
+            <ReferenceField label="Movies" source="movie.id" reference="Movie">
+              <TextField source={MOVIE_TITLE_FIELD} />
+            </ReferenceField>
             <TextField label="Roles" source="roles" />
             <DateField source="updatedAt" label="Updated At" />
             <ReferenceField
@@ -56,6 +62,13 @@ export const UserSeriesMappingShow = (props: ShowProps): React.ReactElement => {
             >
               <TextField source={USERSERIESMAPPING_TITLE_FIELD} />
             </ReferenceField>
+            <ReferenceField
+              label="webseries"
+              source="series.id"
+              reference="Series"
+            >
+              <TextField source={SERIES_TITLE_FIELD} />
+            </ReferenceField>
           </Datagrid>
         </ReferenceManyField>
         <ReferenceManyField
@@ -66,7 +79,9 @@ export const UserSeriesMappingShow = (props: ShowProps): React.ReactElement => {
           <Datagrid rowClick="show">
             <DateField source="createdAt" label="Created At" />
             <TextField label="Description" source="descption" />
-            <TextField label="Director" source="director" />
+            <ReferenceField label="Director" source="user.id" reference="User">
+              <TextField source={USER_TITLE_FIELD} />
+            </ReferenceField>
             <TextField label="ID" source="id" />
             <TextField label="Must Watch Count" source="mustWatchCount" />
             <TextField label="Name" source="name" />

@@ -207,6 +207,13 @@ export class UserMovieMappingControllerBase {
         email: true,
         id: true,
         link: true,
+
+        movies: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
 
@@ -226,6 +233,12 @@ export class UserMovieMappingControllerBase {
         UserName: true,
 
         userSeriesMapping: {
+          select: {
+            id: true,
+          },
+        },
+
+        webseries: {
           select: {
             id: true,
           },
@@ -326,6 +339,13 @@ export class UserMovieMappingControllerBase {
         email: true,
         id: true,
         link: true,
+
+        movies: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
 
@@ -345,6 +365,12 @@ export class UserMovieMappingControllerBase {
         UserName: true,
 
         userSeriesMapping: {
+          select: {
+            id: true,
+          },
+        },
+
+        webseries: {
           select: {
             id: true,
           },

@@ -13,11 +13,13 @@ import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDate, IsString, IsOptional, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
+import { Movie } from "../../movie/base/Movie";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
 import { UserMovieMapping } from "../../userMovieMapping/base/UserMovieMapping";
 import { UserSeriesMapping } from "../../userSeriesMapping/base/UserSeriesMapping";
+import { Series } from "../../series/base/Series";
 
 @ObjectType()
 class User {
@@ -58,6 +60,15 @@ class User {
     nullable: true,
   })
   link!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => Movie,
+  })
+  @ValidateNested()
+  @Type(() => Movie)
+  @IsOptional()
+  movies?: Movie | null;
 
   @ApiProperty({
     required: true,
@@ -116,6 +127,15 @@ class User {
   @Type(() => UserSeriesMapping)
   @IsOptional()
   userSeriesMapping?: UserSeriesMapping | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => Series,
+  })
+  @ValidateNested()
+  @Type(() => Series)
+  @IsOptional()
+  webseries?: Series | null;
 }
 
 export { User as User };

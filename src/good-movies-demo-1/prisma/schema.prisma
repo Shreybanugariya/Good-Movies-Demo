@@ -12,6 +12,7 @@ model User {
   email               String?
   id                  String             @id @default(cuid())
   link                String?
+  movies              Movie?
   password            String
   roles               Json
   updatedAt           DateTime           @updatedAt
@@ -23,12 +24,14 @@ model User {
   UserName            String
   userSeriesMapping   UserSeriesMapping? @relation(fields: [userSeriesMappingId], references: [id])
   userSeriesMappingId String?
+  webseries           Series?
 }
 
 model Movie {
   createdAt      DateTime @default(now())
   description    String
-  Director       String
+  Director       User     @relation(fields: [Id], references: [id])
+  Id             String   @unique
   genre          Genre[]
   id             String   @id @default(cuid())
   mustWatchCount Int?
@@ -53,7 +56,8 @@ model Genre {
 model Series {
   createdAt           DateTime           @default(now())
   descption           String
-  director            String?
+  director            User               @relation(fields: [ID], references: [id])
+  ID                  String             @unique
   genre               Genre[]
   id                  String             @id @default(cuid())
   mustWatchCount      Int

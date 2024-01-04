@@ -50,11 +50,23 @@ export class MovieControllerBase {
   })
   async createMovie(@common.Body() data: MovieCreateInput): Promise<Movie> {
     return await this.service.createMovie({
-      data: data,
+      data: {
+        ...data,
+
+        Director: {
+          connect: data.Director,
+        },
+      },
       select: {
         createdAt: true,
         description: true,
-        Director: true,
+
+        Director: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         mustWatchCount: true,
         name: true,
@@ -82,7 +94,13 @@ export class MovieControllerBase {
       select: {
         createdAt: true,
         description: true,
-        Director: true,
+
+        Director: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         mustWatchCount: true,
         name: true,
@@ -111,7 +129,13 @@ export class MovieControllerBase {
       select: {
         createdAt: true,
         description: true,
-        Director: true,
+
+        Director: {
+          select: {
+            id: true,
+          },
+        },
+
         id: true,
         mustWatchCount: true,
         name: true,
@@ -145,11 +169,23 @@ export class MovieControllerBase {
     try {
       return await this.service.updateMovie({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          Director: {
+            connect: data.Director,
+          },
+        },
         select: {
           createdAt: true,
           description: true,
-          Director: true,
+
+          Director: {
+            select: {
+              id: true,
+            },
+          },
+
           id: true,
           mustWatchCount: true,
           name: true,
@@ -186,7 +222,13 @@ export class MovieControllerBase {
         select: {
           createdAt: true,
           description: true,
-          Director: true,
+
+          Director: {
+            select: {
+              id: true,
+            },
+          },
+
           id: true,
           mustWatchCount: true,
           name: true,

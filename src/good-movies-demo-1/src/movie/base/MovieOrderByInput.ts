@@ -50,7 +50,7 @@ class MovieOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  Director?: SortOrder;
+  Id?: SortOrder;
 
   @ApiProperty({
     required: false,

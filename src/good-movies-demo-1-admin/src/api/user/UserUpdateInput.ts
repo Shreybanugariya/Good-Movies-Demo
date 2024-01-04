@@ -1,10 +1,13 @@
+import { MovieWhereUniqueInput } from "../movie/MovieWhereUniqueInput";
 import { InputJsonValue } from "../../types";
 import { UserMovieMappingWhereUniqueInput } from "../userMovieMapping/UserMovieMappingWhereUniqueInput";
 import { UserSeriesMappingWhereUniqueInput } from "../userSeriesMapping/UserSeriesMappingWhereUniqueInput";
+import { SeriesWhereUniqueInput } from "../series/SeriesWhereUniqueInput";
 
 export type UserUpdateInput = {
   email?: string | null;
   link?: string | null;
+  movies?: MovieWhereUniqueInput | null;
   password?: string;
   roles?: InputJsonValue;
   userMovieMapping?: UserMovieMappingWhereUniqueInput | null;
@@ -12,4 +15,5 @@ export type UserUpdateInput = {
   username?: string;
   UserName?: string;
   userSeriesMapping?: UserSeriesMappingWhereUniqueInput | null;
+  webseries?: SeriesWhereUniqueInput | null;
 };

@@ -16,11 +16,7 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
-import * as nestAccessControl from "nest-access-control";
-import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { UserMovieMappingService } from "../userMovieMapping.service";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { UserMovieMappingCreateInput } from "./UserMovieMappingCreateInput";
 import { UserMovieMapping } from "./UserMovieMapping";
 import { UserMovieMappingFindManyArgs } from "./UserMovieMappingFindManyArgs";
@@ -30,23 +26,12 @@ import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 
-@swagger.ApiBearerAuth()
-@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class UserMovieMappingControllerBase {
-  constructor(
-    protected readonly service: UserMovieMappingService,
-    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
-  ) {}
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  constructor(protected readonly service: UserMovieMappingService) {}
   @common.Post()
   @swagger.ApiCreatedResponse({ type: UserMovieMapping })
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "create",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
+  @swagger.ApiBody({
+    type: UserMovieMappingCreateInput,
   })
   async createUserMovieMapping(
     @common.Body() data: UserMovieMappingCreateInput
@@ -61,18 +46,9 @@ export class UserMovieMappingControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [UserMovieMapping] })
   @ApiNestedQuery(UserMovieMappingFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "read",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async userMovieMappings(
     @common.Req() request: Request
   ): Promise<UserMovieMapping[]> {
@@ -87,18 +63,9 @@ export class UserMovieMappingControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: UserMovieMapping })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "read",
-    possession: "own",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async userMovieMapping(
     @common.Param() params: UserMovieMappingWhereUniqueInput
   ): Promise<UserMovieMapping | null> {
@@ -118,17 +85,11 @@ export class UserMovieMappingControllerBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: UserMovieMapping })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "update",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
+  @swagger.ApiBody({
+    type: UserMovieMappingUpdateInput,
   })
   async updateUserMovieMapping(
     @common.Param() params: UserMovieMappingWhereUniqueInput,
@@ -157,14 +118,6 @@ export class UserMovieMappingControllerBase {
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: UserMovieMapping })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "delete",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async deleteUserMovieMapping(
     @common.Param() params: UserMovieMappingWhereUniqueInput
   ): Promise<UserMovieMapping | null> {
@@ -187,14 +140,8 @@ export class UserMovieMappingControllerBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id/movieId")
   @ApiNestedQuery(UserFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
   async findMovieId(
     @common.Req() request: Request,
     @common.Param() params: UserMovieMappingWhereUniqueInput
@@ -254,11 +201,6 @@ export class UserMovieMappingControllerBase {
   }
 
   @common.Post("/:id/movieId")
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "update",
-    possession: "any",
-  })
   async connectMovieId(
     @common.Param() params: UserMovieMappingWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -276,11 +218,6 @@ export class UserMovieMappingControllerBase {
   }
 
   @common.Patch("/:id/movieId")
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "update",
-    possession: "any",
-  })
   async updateMovieId(
     @common.Param() params: UserMovieMappingWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -298,11 +235,6 @@ export class UserMovieMappingControllerBase {
   }
 
   @common.Delete("/:id/movieId")
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "update",
-    possession: "any",
-  })
   async disconnectMovieId(
     @common.Param() params: UserMovieMappingWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -319,14 +251,8 @@ export class UserMovieMappingControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id/userId")
   @ApiNestedQuery(UserFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
   async findUserId(
     @common.Req() request: Request,
     @common.Param() params: UserMovieMappingWhereUniqueInput
@@ -386,11 +312,6 @@ export class UserMovieMappingControllerBase {
   }
 
   @common.Post("/:id/userId")
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "update",
-    possession: "any",
-  })
   async connectUserId(
     @common.Param() params: UserMovieMappingWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -408,11 +329,6 @@ export class UserMovieMappingControllerBase {
   }
 
   @common.Patch("/:id/userId")
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "update",
-    possession: "any",
-  })
   async updateUserId(
     @common.Param() params: UserMovieMappingWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -430,11 +346,6 @@ export class UserMovieMappingControllerBase {
   }
 
   @common.Delete("/:id/userId")
-  @nestAccessControl.UseRoles({
-    resource: "UserMovieMapping",
-    action: "update",
-    possession: "any",
-  })
   async disconnectUserId(
     @common.Param() params: UserMovieMappingWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]

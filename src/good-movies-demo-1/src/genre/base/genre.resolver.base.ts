@@ -13,12 +13,6 @@ import * as graphql from "@nestjs/graphql";
 import { GraphQLError } from "graphql";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
-import * as nestAccessControl from "nest-access-control";
-import * as gqlACGuard from "../../auth/gqlAC.guard";
-import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
-import * as common from "@nestjs/common";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { Genre } from "./Genre";
 import { GenreCountArgs } from "./GenreCountArgs";
 import { GenreFindManyArgs } from "./GenreFindManyArgs";
@@ -30,20 +24,10 @@ import { Movie } from "../../movie/base/Movie";
 import { Series } from "../../series/base/Series";
 import { VideoContent } from "../../videoContent/base/VideoContent";
 import { GenreService } from "../genre.service";
-@common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Genre)
 export class GenreResolverBase {
-  constructor(
-    protected readonly service: GenreService,
-    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
-  ) {}
+  constructor(protected readonly service: GenreService) {}
 
-  @graphql.Query(() => MetaQueryPayload)
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "read",
-    possession: "any",
-  })
   async _genresMeta(
     @graphql.Args() args: GenreCountArgs
   ): Promise<MetaQueryPayload> {
@@ -53,24 +37,12 @@ export class GenreResolverBase {
     };
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Genre])
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "read",
-    possession: "any",
-  })
   async genres(@graphql.Args() args: GenreFindManyArgs): Promise<Genre[]> {
     return this.service.genres(args);
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Genre, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "read",
-    possession: "own",
-  })
   async genre(
     @graphql.Args() args: GenreFindUniqueArgs
   ): Promise<Genre | null> {
@@ -81,13 +53,7 @@ export class GenreResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Genre)
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "create",
-    possession: "any",
-  })
   async createGenre(@graphql.Args() args: CreateGenreArgs): Promise<Genre> {
     return await this.service.createGenre({
       ...args,
@@ -115,13 +81,7 @@ export class GenreResolverBase {
     });
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Genre)
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "update",
-    possession: "any",
-  })
   async updateGenre(
     @graphql.Args() args: UpdateGenreArgs
   ): Promise<Genre | null> {
@@ -161,11 +121,6 @@ export class GenreResolverBase {
   }
 
   @graphql.Mutation(() => Genre)
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "delete",
-    possession: "any",
-  })
   async deleteGenre(
     @graphql.Args() args: DeleteGenreArgs
   ): Promise<Genre | null> {
@@ -181,15 +136,9 @@ export class GenreResolverBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Movie, {
     nullable: true,
     name: "movie",
-  })
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "read",
-    possession: "any",
   })
   async getMovie(@graphql.Parent() parent: Genre): Promise<Movie | null> {
     const result = await this.service.getMovie(parent.id);
@@ -200,15 +149,9 @@ export class GenreResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Series, {
     nullable: true,
     name: "series",
-  })
-  @nestAccessControl.UseRoles({
-    resource: "Series",
-    action: "read",
-    possession: "any",
   })
   async getSeries(@graphql.Parent() parent: Genre): Promise<Series | null> {
     const result = await this.service.getSeries(parent.id);
@@ -219,15 +162,9 @@ export class GenreResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => VideoContent, {
     nullable: true,
     name: "videoContent",
-  })
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "read",
-    possession: "any",
   })
   async getVideoContent(
     @graphql.Parent() parent: Genre

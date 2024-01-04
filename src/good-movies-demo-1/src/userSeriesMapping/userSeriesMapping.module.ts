@@ -1,12 +1,11 @@
-import { Module, forwardRef } from "@nestjs/common";
-import { AuthModule } from "../auth/auth.module";
+import { Module } from "@nestjs/common";
 import { UserSeriesMappingModuleBase } from "./base/userSeriesMapping.module.base";
 import { UserSeriesMappingService } from "./userSeriesMapping.service";
 import { UserSeriesMappingController } from "./userSeriesMapping.controller";
 import { UserSeriesMappingResolver } from "./userSeriesMapping.resolver";
 
 @Module({
-  imports: [UserSeriesMappingModuleBase, forwardRef(() => AuthModule)],
+  imports: [UserSeriesMappingModuleBase],
   controllers: [UserSeriesMappingController],
   providers: [UserSeriesMappingService, UserSeriesMappingResolver],
   exports: [UserSeriesMappingService],

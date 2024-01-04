@@ -16,34 +16,19 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
-import * as nestAccessControl from "nest-access-control";
-import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { GenreService } from "../genre.service";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { GenreCreateInput } from "./GenreCreateInput";
 import { Genre } from "./Genre";
 import { GenreFindManyArgs } from "./GenreFindManyArgs";
 import { GenreWhereUniqueInput } from "./GenreWhereUniqueInput";
 import { GenreUpdateInput } from "./GenreUpdateInput";
 
-@swagger.ApiBearerAuth()
-@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class GenreControllerBase {
-  constructor(
-    protected readonly service: GenreService,
-    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
-  ) {}
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  constructor(protected readonly service: GenreService) {}
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Genre })
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "create",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
+  @swagger.ApiBody({
+    type: GenreCreateInput,
   })
   async createGenre(@common.Body() data: GenreCreateInput): Promise<Genre> {
     return await this.service.createGenre({
@@ -98,18 +83,9 @@ export class GenreControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Genre] })
   @ApiNestedQuery(GenreFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "read",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async genres(@common.Req() request: Request): Promise<Genre[]> {
     const args = plainToClass(GenreFindManyArgs, request.query);
     return this.service.genres({
@@ -144,18 +120,9 @@ export class GenreControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Genre })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "read",
-    possession: "own",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async genre(
     @common.Param() params: GenreWhereUniqueInput
   ): Promise<Genre | null> {
@@ -197,17 +164,11 @@ export class GenreControllerBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Genre })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "update",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
+  @swagger.ApiBody({
+    type: GenreUpdateInput,
   })
   async updateGenre(
     @common.Param() params: GenreWhereUniqueInput,
@@ -278,14 +239,6 @@ export class GenreControllerBase {
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Genre })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "delete",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async deleteGenre(
     @common.Param() params: GenreWhereUniqueInput
   ): Promise<Genre | null> {

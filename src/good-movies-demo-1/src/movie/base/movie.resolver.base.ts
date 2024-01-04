@@ -13,12 +13,6 @@ import * as graphql from "@nestjs/graphql";
 import { GraphQLError } from "graphql";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
-import * as nestAccessControl from "nest-access-control";
-import * as gqlACGuard from "../../auth/gqlAC.guard";
-import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
-import * as common from "@nestjs/common";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { Movie } from "./Movie";
 import { MovieCountArgs } from "./MovieCountArgs";
 import { MovieFindManyArgs } from "./MovieFindManyArgs";
@@ -30,20 +24,10 @@ import { GenreFindManyArgs } from "../../genre/base/GenreFindManyArgs";
 import { Genre } from "../../genre/base/Genre";
 import { User } from "../../user/base/User";
 import { MovieService } from "../movie.service";
-@common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Movie)
 export class MovieResolverBase {
-  constructor(
-    protected readonly service: MovieService,
-    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
-  ) {}
+  constructor(protected readonly service: MovieService) {}
 
-  @graphql.Query(() => MetaQueryPayload)
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "read",
-    possession: "any",
-  })
   async _moviesMeta(
     @graphql.Args() args: MovieCountArgs
   ): Promise<MetaQueryPayload> {
@@ -53,24 +37,12 @@ export class MovieResolverBase {
     };
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Movie])
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "read",
-    possession: "any",
-  })
   async movies(@graphql.Args() args: MovieFindManyArgs): Promise<Movie[]> {
     return this.service.movies(args);
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Movie, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "read",
-    possession: "own",
-  })
   async movie(
     @graphql.Args() args: MovieFindUniqueArgs
   ): Promise<Movie | null> {
@@ -81,13 +53,7 @@ export class MovieResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Movie)
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "create",
-    possession: "any",
-  })
   async createMovie(@graphql.Args() args: CreateMovieArgs): Promise<Movie> {
     return await this.service.createMovie({
       ...args,
@@ -101,13 +67,7 @@ export class MovieResolverBase {
     });
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Movie)
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "update",
-    possession: "any",
-  })
   async updateMovie(
     @graphql.Args() args: UpdateMovieArgs
   ): Promise<Movie | null> {
@@ -133,11 +93,6 @@ export class MovieResolverBase {
   }
 
   @graphql.Mutation(() => Movie)
-  @nestAccessControl.UseRoles({
-    resource: "Movie",
-    action: "delete",
-    possession: "any",
-  })
   async deleteMovie(
     @graphql.Args() args: DeleteMovieArgs
   ): Promise<Movie | null> {
@@ -153,13 +108,7 @@ export class MovieResolverBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [Genre], { name: "genre" })
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "read",
-    possession: "any",
-  })
   async findGenre(
     @graphql.Parent() parent: Movie,
     @graphql.Args() args: GenreFindManyArgs
@@ -173,15 +122,9 @@ export class MovieResolverBase {
     return results;
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => User, {
     nullable: true,
     name: "director",
-  })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
   })
   async getDirector(@graphql.Parent() parent: Movie): Promise<User | null> {
     const result = await this.service.getDirector(parent.id);

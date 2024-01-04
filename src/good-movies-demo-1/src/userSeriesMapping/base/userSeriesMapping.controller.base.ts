@@ -16,11 +16,7 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
-import * as nestAccessControl from "nest-access-control";
-import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { UserSeriesMappingService } from "../userSeriesMapping.service";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { UserSeriesMappingCreateInput } from "./UserSeriesMappingCreateInput";
 import { UserSeriesMapping } from "./UserSeriesMapping";
 import { UserSeriesMappingFindManyArgs } from "./UserSeriesMappingFindManyArgs";
@@ -33,23 +29,12 @@ import { SeriesFindManyArgs } from "../../series/base/SeriesFindManyArgs";
 import { Series } from "../../series/base/Series";
 import { SeriesWhereUniqueInput } from "../../series/base/SeriesWhereUniqueInput";
 
-@swagger.ApiBearerAuth()
-@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class UserSeriesMappingControllerBase {
-  constructor(
-    protected readonly service: UserSeriesMappingService,
-    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
-  ) {}
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  constructor(protected readonly service: UserSeriesMappingService) {}
   @common.Post()
   @swagger.ApiCreatedResponse({ type: UserSeriesMapping })
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "create",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
+  @swagger.ApiBody({
+    type: UserSeriesMappingCreateInput,
   })
   async createUserSeriesMapping(
     @common.Body() data: UserSeriesMappingCreateInput
@@ -64,18 +49,9 @@ export class UserSeriesMappingControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [UserSeriesMapping] })
   @ApiNestedQuery(UserSeriesMappingFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "read",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async userSeriesMappings(
     @common.Req() request: Request
   ): Promise<UserSeriesMapping[]> {
@@ -90,18 +66,9 @@ export class UserSeriesMappingControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: UserSeriesMapping })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "read",
-    possession: "own",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async userSeriesMapping(
     @common.Param() params: UserSeriesMappingWhereUniqueInput
   ): Promise<UserSeriesMapping | null> {
@@ -121,17 +88,11 @@ export class UserSeriesMappingControllerBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: UserSeriesMapping })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "update",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
+  @swagger.ApiBody({
+    type: UserSeriesMappingUpdateInput,
   })
   async updateUserSeriesMapping(
     @common.Param() params: UserSeriesMappingWhereUniqueInput,
@@ -160,14 +121,6 @@ export class UserSeriesMappingControllerBase {
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: UserSeriesMapping })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "delete",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
   async deleteUserSeriesMapping(
     @common.Param() params: UserSeriesMappingWhereUniqueInput
   ): Promise<UserSeriesMapping | null> {
@@ -190,14 +143,8 @@ export class UserSeriesMappingControllerBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id/userId")
   @ApiNestedQuery(UserFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
   async findUserId(
     @common.Req() request: Request,
     @common.Param() params: UserSeriesMappingWhereUniqueInput
@@ -257,11 +204,6 @@ export class UserSeriesMappingControllerBase {
   }
 
   @common.Post("/:id/userId")
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "update",
-    possession: "any",
-  })
   async connectUserId(
     @common.Param() params: UserSeriesMappingWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -279,11 +221,6 @@ export class UserSeriesMappingControllerBase {
   }
 
   @common.Patch("/:id/userId")
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "update",
-    possession: "any",
-  })
   async updateUserId(
     @common.Param() params: UserSeriesMappingWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -301,11 +238,6 @@ export class UserSeriesMappingControllerBase {
   }
 
   @common.Delete("/:id/userId")
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "update",
-    possession: "any",
-  })
   async disconnectUserId(
     @common.Param() params: UserSeriesMappingWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -322,14 +254,8 @@ export class UserSeriesMappingControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id/webSeriesId")
   @ApiNestedQuery(SeriesFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Series",
-    action: "read",
-    possession: "any",
-  })
   async findWebSeriesId(
     @common.Req() request: Request,
     @common.Param() params: UserSeriesMappingWhereUniqueInput
@@ -369,11 +295,6 @@ export class UserSeriesMappingControllerBase {
   }
 
   @common.Post("/:id/webSeriesId")
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "update",
-    possession: "any",
-  })
   async connectWebSeriesId(
     @common.Param() params: UserSeriesMappingWhereUniqueInput,
     @common.Body() body: SeriesWhereUniqueInput[]
@@ -391,11 +312,6 @@ export class UserSeriesMappingControllerBase {
   }
 
   @common.Patch("/:id/webSeriesId")
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "update",
-    possession: "any",
-  })
   async updateWebSeriesId(
     @common.Param() params: UserSeriesMappingWhereUniqueInput,
     @common.Body() body: SeriesWhereUniqueInput[]
@@ -413,11 +329,6 @@ export class UserSeriesMappingControllerBase {
   }
 
   @common.Delete("/:id/webSeriesId")
-  @nestAccessControl.UseRoles({
-    resource: "UserSeriesMapping",
-    action: "update",
-    possession: "any",
-  })
   async disconnectWebSeriesId(
     @common.Param() params: UserSeriesMappingWhereUniqueInput,
     @common.Body() body: SeriesWhereUniqueInput[]

@@ -13,12 +13,6 @@ import * as graphql from "@nestjs/graphql";
 import { GraphQLError } from "graphql";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
-import * as nestAccessControl from "nest-access-control";
-import * as gqlACGuard from "../../auth/gqlAC.guard";
-import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
-import * as common from "@nestjs/common";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { VideoContent } from "./VideoContent";
 import { VideoContentCountArgs } from "./VideoContentCountArgs";
 import { VideoContentFindManyArgs } from "./VideoContentFindManyArgs";
@@ -30,20 +24,10 @@ import { GenreFindManyArgs } from "../../genre/base/GenreFindManyArgs";
 import { Genre } from "../../genre/base/Genre";
 import { UserVideoContentMapping } from "../../userVideoContentMapping/base/UserVideoContentMapping";
 import { VideoContentService } from "../videoContent.service";
-@common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => VideoContent)
 export class VideoContentResolverBase {
-  constructor(
-    protected readonly service: VideoContentService,
-    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
-  ) {}
+  constructor(protected readonly service: VideoContentService) {}
 
-  @graphql.Query(() => MetaQueryPayload)
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "read",
-    possession: "any",
-  })
   async _videoContentsMeta(
     @graphql.Args() args: VideoContentCountArgs
   ): Promise<MetaQueryPayload> {
@@ -53,26 +37,14 @@ export class VideoContentResolverBase {
     };
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [VideoContent])
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "read",
-    possession: "any",
-  })
   async videoContents(
     @graphql.Args() args: VideoContentFindManyArgs
   ): Promise<VideoContent[]> {
     return this.service.videoContents(args);
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => VideoContent, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "read",
-    possession: "own",
-  })
   async videoContent(
     @graphql.Args() args: VideoContentFindUniqueArgs
   ): Promise<VideoContent | null> {
@@ -83,13 +55,7 @@ export class VideoContentResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => VideoContent)
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "create",
-    possession: "any",
-  })
   async createVideoContent(
     @graphql.Args() args: CreateVideoContentArgs
   ): Promise<VideoContent> {
@@ -113,13 +79,7 @@ export class VideoContentResolverBase {
     });
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => VideoContent)
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "update",
-    possession: "any",
-  })
   async updateVideoContent(
     @graphql.Args() args: UpdateVideoContentArgs
   ): Promise<VideoContent | null> {
@@ -153,11 +113,6 @@ export class VideoContentResolverBase {
   }
 
   @graphql.Mutation(() => VideoContent)
-  @nestAccessControl.UseRoles({
-    resource: "VideoContent",
-    action: "delete",
-    possession: "any",
-  })
   async deleteVideoContent(
     @graphql.Args() args: DeleteVideoContentArgs
   ): Promise<VideoContent | null> {
@@ -173,13 +128,7 @@ export class VideoContentResolverBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [Genre], { name: "itemPrice" })
-  @nestAccessControl.UseRoles({
-    resource: "Genre",
-    action: "read",
-    possession: "any",
-  })
   async findItemPrice(
     @graphql.Parent() parent: VideoContent,
     @graphql.Args() args: GenreFindManyArgs
@@ -193,15 +142,9 @@ export class VideoContentResolverBase {
     return results;
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => UserVideoContentMapping, {
     nullable: true,
     name: "userVideoContentMapping",
-  })
-  @nestAccessControl.UseRoles({
-    resource: "UserVideoContentMapping",
-    action: "read",
-    possession: "any",
   })
   async getUserVideoContentMapping(
     @graphql.Parent() parent: VideoContent
@@ -214,15 +157,9 @@ export class VideoContentResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => UserVideoContentMapping, {
     nullable: true,
     name: "videoContentMapping",
-  })
-  @nestAccessControl.UseRoles({
-    resource: "UserVideoContentMapping",
-    action: "read",
-    possession: "any",
   })
   async getVideoContentMapping(
     @graphql.Parent() parent: VideoContent

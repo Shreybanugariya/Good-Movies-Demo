@@ -6,7 +6,67 @@
     "attributes": "*"
   },
   {
+    "role": "director",
+    "resource": "User",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "User",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "User",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "User",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "User",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
     "role": "user",
+    "resource": "User",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "User",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "User",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "User",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "User",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
     "resource": "User",
     "action": "create:any",
     "attributes": "*"
@@ -18,7 +78,67 @@
     "attributes": "*"
   },
   {
+    "role": "director",
+    "resource": "User",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "User",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "User",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "User",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "User",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
     "role": "user",
+    "resource": "User",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "User",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "User",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "User",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "User",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
     "resource": "User",
     "action": "delete:any",
     "attributes": "*"
@@ -30,122 +150,1292 @@
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "Order",
-    "action": "read:own",
+    "role": "director",
+    "resource": "User",
+    "action": "read:any",
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "Order",
-    "action": "create:any",
+    "role": "actor",
+    "resource": "User",
+    "action": "read:any",
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "Order",
-    "action": "update:any",
+    "role": "cinematographer",
+    "resource": "User",
+    "action": "read:any",
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "Order",
-    "action": "delete:any",
+    "role": "artist",
+    "resource": "User",
+    "action": "read:any",
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "Order",
+    "role": "writer",
+    "resource": "User",
     "action": "read:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Customer",
+    "resource": "Movie",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Movie",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Movie",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Movie",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Movie",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Movie",
     "action": "read:own",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Customer",
+    "resource": "Movie",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Movie",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Movie",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Movie",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Movie",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Movie",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Customer",
+    "resource": "Movie",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Movie",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Movie",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Movie",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Movie",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Movie",
     "action": "update:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Customer",
+    "resource": "Movie",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Movie",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Movie",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Movie",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Movie",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Movie",
     "action": "delete:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Customer",
+    "resource": "Movie",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Movie",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Movie",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Movie",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Movie",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Movie",
     "action": "read:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Address",
+    "resource": "Genre",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Genre",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Genre",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Genre",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Genre",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Genre",
     "action": "read:own",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Address",
+    "resource": "Genre",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Genre",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Genre",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Genre",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Genre",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Genre",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Address",
+    "resource": "Genre",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Genre",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Genre",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Genre",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Genre",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Genre",
     "action": "update:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Address",
+    "resource": "Genre",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Genre",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Genre",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Genre",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Genre",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Genre",
     "action": "delete:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Address",
+    "resource": "Genre",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Genre",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Genre",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Genre",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Genre",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Genre",
     "action": "read:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Product",
+    "resource": "Series",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Series",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Series",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Series",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Series",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Series",
     "action": "read:own",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Product",
+    "resource": "Series",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Series",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Series",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Series",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Series",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Series",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Product",
+    "resource": "Series",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Series",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Series",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Series",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Series",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Series",
     "action": "update:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Product",
+    "resource": "Series",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Series",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Series",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Series",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Series",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Series",
     "action": "delete:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Product",
+    "resource": "Series",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "Series",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "Series",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "Series",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "Series",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "Series",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "VideoContent",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "VideoContent",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "VideoContent",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "VideoContent",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "VideoContent",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "VideoContent",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "VideoContent",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "VideoContent",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "VideoContent",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "VideoContent",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "VideoContent",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "VideoContent",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "VideoContent",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "VideoContent",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "VideoContent",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "VideoContent",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "VideoContent",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "VideoContent",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "VideoContent",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "VideoContent",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "VideoContent",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "VideoContent",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "VideoContent",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "VideoContent",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "VideoContent",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "VideoContent",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "VideoContent",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "VideoContent",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "VideoContent",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "VideoContent",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserMovieMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserMovieMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserMovieMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserMovieMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserMovieMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserMovieMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserMovieMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserMovieMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserMovieMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserMovieMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserMovieMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserMovieMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserMovieMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserMovieMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserMovieMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserMovieMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserMovieMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserMovieMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserMovieMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserMovieMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserMovieMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserMovieMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserMovieMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserMovieMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserMovieMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserMovieMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserMovieMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserMovieMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserMovieMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserMovieMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserSeriesMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserSeriesMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserSeriesMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserSeriesMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserSeriesMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserSeriesMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserSeriesMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserSeriesMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserSeriesMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserSeriesMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserSeriesMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserSeriesMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserSeriesMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserSeriesMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserSeriesMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserSeriesMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserSeriesMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserSeriesMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserSeriesMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserSeriesMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserSeriesMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserSeriesMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserSeriesMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserSeriesMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserSeriesMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserSeriesMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserSeriesMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserSeriesMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserSeriesMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserSeriesMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserVideoContentMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserVideoContentMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserVideoContentMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserVideoContentMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserVideoContentMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserVideoContentMapping",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserVideoContentMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserVideoContentMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserVideoContentMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserVideoContentMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserVideoContentMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserVideoContentMapping",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserVideoContentMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserVideoContentMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserVideoContentMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserVideoContentMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserVideoContentMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserVideoContentMapping",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserVideoContentMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserVideoContentMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserVideoContentMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserVideoContentMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserVideoContentMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserVideoContentMapping",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "UserVideoContentMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "director",
+    "resource": "UserVideoContentMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "actor",
+    "resource": "UserVideoContentMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "cinematographer",
+    "resource": "UserVideoContentMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "artist",
+    "resource": "UserVideoContentMapping",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "writer",
+    "resource": "UserVideoContentMapping",
     "action": "read:any",
     "attributes": "*"
   }

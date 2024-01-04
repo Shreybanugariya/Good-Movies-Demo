@@ -13,8 +13,12 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { Type } from "class-transformer";
-import { IsOptional } from "class-validator";
+import { IsOptional, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
+import { MovieWhereUniqueInput } from "../../movie/base/MovieWhereUniqueInput";
+import { UserMovieMappingWhereUniqueInput } from "../../userMovieMapping/base/UserMovieMappingWhereUniqueInput";
+import { UserSeriesMappingWhereUniqueInput } from "../../userSeriesMapping/base/UserSeriesMappingWhereUniqueInput";
+import { SeriesWhereUniqueInput } from "../../series/base/SeriesWhereUniqueInput";
 
 @InputType()
 class UserWhereInput {
@@ -27,7 +31,7 @@ class UserWhereInput {
   @Field(() => StringNullableFilter, {
     nullable: true,
   })
-  firstName?: StringNullableFilter;
+  email?: StringNullableFilter;
 
   @ApiProperty({
     required: false,
@@ -49,7 +53,43 @@ class UserWhereInput {
   @Field(() => StringNullableFilter, {
     nullable: true,
   })
-  lastName?: StringNullableFilter;
+  link?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => MovieWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => MovieWhereUniqueInput)
+  @IsOptional()
+  @Field(() => MovieWhereUniqueInput, {
+    nullable: true,
+  })
+  movies?: MovieWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserMovieMappingWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserMovieMappingWhereUniqueInput)
+  @IsOptional()
+  @Field(() => UserMovieMappingWhereUniqueInput, {
+    nullable: true,
+  })
+  userMovieMapping?: UserMovieMappingWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserMovieMappingWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserMovieMappingWhereUniqueInput)
+  @IsOptional()
+  @Field(() => UserMovieMappingWhereUniqueInput, {
+    nullable: true,
+  })
+  userMovieMappings?: UserMovieMappingWhereUniqueInput;
 
   @ApiProperty({
     required: false,
@@ -61,6 +101,41 @@ class UserWhereInput {
     nullable: true,
   })
   username?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringFilter,
+  })
+  @Type(() => StringFilter)
+  @IsOptional()
+  @Field(() => StringFilter, {
+    nullable: true,
+  })
+  UserName?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserSeriesMappingWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserSeriesMappingWhereUniqueInput)
+  @IsOptional()
+  @Field(() => UserSeriesMappingWhereUniqueInput, {
+    nullable: true,
+  })
+  userSeriesMapping?: UserSeriesMappingWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => SeriesWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => SeriesWhereUniqueInput)
+  @IsOptional()
+  @Field(() => SeriesWhereUniqueInput, {
+    nullable: true,
+  })
+  webseries?: SeriesWhereUniqueInput;
 }
 
 export { UserWhereInput as UserWhereInput };

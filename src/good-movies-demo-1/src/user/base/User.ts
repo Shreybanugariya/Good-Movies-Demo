@@ -11,11 +11,15 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString, IsOptional } from "class-validator";
+import { IsDate, IsString, IsOptional, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
+import { Movie } from "../../movie/base/Movie";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
+import { UserMovieMapping } from "../../userMovieMapping/base/UserMovieMapping";
+import { UserSeriesMapping } from "../../userSeriesMapping/base/UserSeriesMapping";
+import { Series } from "../../series/base/Series";
 
 @ObjectType()
 class User {
@@ -36,7 +40,7 @@ class User {
   @Field(() => String, {
     nullable: true,
   })
-  firstName!: string | null;
+  email!: string | null;
 
   @ApiProperty({
     required: true,
@@ -55,7 +59,16 @@ class User {
   @Field(() => String, {
     nullable: true,
   })
-  lastName!: string | null;
+  link!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => Movie,
+  })
+  @ValidateNested()
+  @Type(() => Movie)
+  @IsOptional()
+  movies?: Movie | null;
 
   @ApiProperty({
     required: true,
@@ -73,12 +86,56 @@ class User {
   updatedAt!: Date;
 
   @ApiProperty({
+    required: false,
+    type: () => UserMovieMapping,
+  })
+  @ValidateNested()
+  @Type(() => UserMovieMapping)
+  @IsOptional()
+  userMovieMapping?: UserMovieMapping | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserMovieMapping,
+  })
+  @ValidateNested()
+  @Type(() => UserMovieMapping)
+  @IsOptional()
+  userMovieMappings?: UserMovieMapping | null;
+
+  @ApiProperty({
     required: true,
     type: String,
   })
   @IsString()
   @Field(() => String)
   username!: string;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  UserName!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserSeriesMapping,
+  })
+  @ValidateNested()
+  @Type(() => UserSeriesMapping)
+  @IsOptional()
+  userSeriesMapping?: UserSeriesMapping | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => Series,
+  })
+  @ValidateNested()
+  @Type(() => Series)
+  @IsOptional()
+  webseries?: Series | null;
 }
 
 export { User as User };

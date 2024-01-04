@@ -11,10 +11,15 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional } from "class-validator";
+import { IsString, IsOptional, ValidateNested } from "class-validator";
+import { MovieWhereUniqueInput } from "../../movie/base/MovieWhereUniqueInput";
+import { Type } from "class-transformer";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
+import { UserMovieMappingWhereUniqueInput } from "../../userMovieMapping/base/UserMovieMappingWhereUniqueInput";
+import { UserSeriesMappingWhereUniqueInput } from "../../userSeriesMapping/base/UserSeriesMappingWhereUniqueInput";
+import { SeriesWhereUniqueInput } from "../../series/base/SeriesWhereUniqueInput";
 
 @InputType()
 class UserCreateInput {
@@ -27,7 +32,7 @@ class UserCreateInput {
   @Field(() => String, {
     nullable: true,
   })
-  firstName?: string | null;
+  email?: string | null;
 
   @ApiProperty({
     required: false,
@@ -38,7 +43,19 @@ class UserCreateInput {
   @Field(() => String, {
     nullable: true,
   })
-  lastName?: string | null;
+  link?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => MovieWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => MovieWhereUniqueInput)
+  @IsOptional()
+  @Field(() => MovieWhereUniqueInput, {
+    nullable: true,
+  })
+  movies?: MovieWhereUniqueInput | null;
 
   @ApiProperty({
     required: true,
@@ -56,12 +73,68 @@ class UserCreateInput {
   roles!: InputJsonValue;
 
   @ApiProperty({
+    required: false,
+    type: () => UserMovieMappingWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserMovieMappingWhereUniqueInput)
+  @IsOptional()
+  @Field(() => UserMovieMappingWhereUniqueInput, {
+    nullable: true,
+  })
+  userMovieMapping?: UserMovieMappingWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserMovieMappingWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserMovieMappingWhereUniqueInput)
+  @IsOptional()
+  @Field(() => UserMovieMappingWhereUniqueInput, {
+    nullable: true,
+  })
+  userMovieMappings?: UserMovieMappingWhereUniqueInput | null;
+
+  @ApiProperty({
     required: true,
     type: String,
   })
   @IsString()
   @Field(() => String)
   username!: string;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  UserName!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserSeriesMappingWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserSeriesMappingWhereUniqueInput)
+  @IsOptional()
+  @Field(() => UserSeriesMappingWhereUniqueInput, {
+    nullable: true,
+  })
+  userSeriesMapping?: UserSeriesMappingWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => SeriesWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => SeriesWhereUniqueInput)
+  @IsOptional()
+  @Field(() => SeriesWhereUniqueInput, {
+    nullable: true,
+  })
+  webseries?: SeriesWhereUniqueInput | null;
 }
 
 export { UserCreateInput as UserCreateInput };

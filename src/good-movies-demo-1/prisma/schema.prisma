@@ -8,60 +8,101 @@ generator client {
 }
 
 model User {
+  createdAt           DateTime           @default(now())
+  email               String?
+  id                  String             @id @default(cuid())
+  link                String?
+  movies              Movie?
+  password            String
+  roles               Json
+  updatedAt           DateTime           @updatedAt
+  userMovieMapping    UserMovieMapping?  @relation(name: "userMovieMapping", fields: [userMovieMappingId], references: [id])
+  userMovieMappingId  String?
+  userMovieMappings   UserMovieMapping?  @relation(name: "movieId", fields: [userMovieMappingsId], references: [id])
+  userMovieMappingsId String?
+  username            String             @unique
+  UserName            String
+  userSeriesMapping   UserSeriesMapping? @relation(fields: [userSeriesMappingId], references: [id])
+  userSeriesMappingId String?
+  webseries           Series?
+}
+
+model Movie {
+  createdAt      DateTime @default(now())
+  description    String
+  Director       User     @relation(fields: [Id], references: [id])
+  Id             String   @unique
+  genre          Genre[]
+  id             String   @id @default(cuid())
+  mustWatchCount Int?
+  name           String   @Titanic
+  updatedAt      DateTime @updatedAt
+}
+
+model Genre {
+  createdAt      DateTime      @default(now())
+  decription     String
+  id             String        @id @default(cuid())
+  movie          Movie?        @relation(fields: [movieId], references: [id])
+  movieId        String?
+  Name           String
+  series         Series?       @relation(fields: [seriesId], references: [id])
+  seriesId       String?
+  updatedAt      DateTime      @updatedAt
+  videoContent   VideoContent? @relation(fields: [videoContentId], references: [id])
+  videoContentId String?
+}
+
+model Series {
+  createdAt           DateTime           @default(now())
+  descption           String
+  director            User               @relation(fields: [ID], references: [id])
+  ID                  String             @unique
+  genre               Genre[]
+  id                  String             @id @default(cuid())
+  mustWatchCount      Int
+  name                String
+  rating              Decimal
+  updatedAt           DateTime           @updatedAt
+  userSeriesMapping   UserSeriesMapping? @relation(fields: [userSeriesMappingId], references: [id])
+  userSeriesMappingId String?
+}
+
+model VideoContent {
+  createdAt                 DateTime                 @default(now())
+  description               String?
+  id                        String                   @id @default(cuid())
+  itemPrice                 Genre[]
+  mustWatchCount            Int?
+  name                      String?
+  rating                    Decimal?
+  updatedAt                 DateTime                 @updatedAt
+  userVideoContentMapping   UserVideoContentMapping? @relation(name: "userVideoContentMapping", fields: [userVideoContentMappingId], references: [id])
+  userVideoContentMappingId String?
+  videoContentMapping       UserVideoContentMapping? @relation(name: "videoContentId", fields: [videoContentMappingId], references: [id])
+  videoContentMappingId     String?
+}
+
+model UserMovieMapping {
   createdAt DateTime @default(now())
-  firstName String?
   id        String   @id @default(cuid())
-  lastName  String?
-  password  String
-  roles     Json
+  movieId   User[]   @relation(name: "movieId")
   updatedAt DateTime @updatedAt
-  username  String   @unique
+  userId    User[]   @relation(name: "userMovieMapping")
 }
 
-model Order {
-  createdAt  DateTime  @default(now())
-  customer   Customer? @relation(fields: [customerId], references: [id])
-  customerId String?
-  discount   Float?
-  id         String    @id @default(cuid())
-  product    Product?  @relation(fields: [productId], references: [id])
-  productId  String?
-  quantity   Int?
-  totalPrice Int?
-  updatedAt  DateTime  @updatedAt
-}
-
-model Customer {
-  address   Address? @relation(fields: [addressId], references: [id])
-  addressId String?
-  createdAt DateTime @default(now())
-  email     String?
-  firstName String?
-  id        String   @id @default(cuid())
-  lastName  String?
-  orders    Order[]
-  phone     String?
-  updatedAt DateTime @updatedAt
-}
-
-model Address {
-  address_1 String?
-  address_2 String?
-  city      String?
-  createdAt DateTime   @default(now())
-  customers Customer[]
-  id        String     @id @default(cuid())
-  state     String?
-  updatedAt DateTime   @updatedAt
-  zip       Int?
-}
-
-model Product {
+model UserSeriesMapping {
   createdAt   DateTime @default(now())
-  description String?
   id          String   @id @default(cuid())
-  itemPrice   Float?
-  name        String?
-  orders      Order[]
   updatedAt   DateTime @updatedAt
+  userId      User[]
+  webSeriesId Series[]
+}
+
+model UserVideoContentMapping {
+  createdAt      DateTime       @default(now())
+  id             String         @id @default(cuid())
+  updatedAt      DateTime       @updatedAt
+  userId         VideoContent[] @relation(name: "userVideoContentMapping")
+  videoContentId VideoContent[] @relation(name: "videoContentId")
 }
